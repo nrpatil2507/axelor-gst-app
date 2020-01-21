@@ -46,7 +46,7 @@
     <panel title="Address" name="addressPanel">
       <field name="invoiceAddress" colSpan="4" />
       <field name="shippingAddress" colSpan="4" />
-      <field name="isInvoiceAddAsShipping" colSpan="4" />
+      <field name="isInvoiceAddAsShipping" colSpan="4" onChange="action-invoice-method-set-shipping-address"/>
     </panel>
     <panel-related field="invoiceItemsList" target="com.axelor.gst.db.InvoiceLine"
       name="invoiceItemsPanel">
@@ -114,4 +114,5 @@
 <action-method name="action-invoice-method-set-shipping-address">
  <call class="com.axelor.gst.db.web.GstInvoiceController" method="setShippingAddress"/>
 </action-method>
+
 </object-views>

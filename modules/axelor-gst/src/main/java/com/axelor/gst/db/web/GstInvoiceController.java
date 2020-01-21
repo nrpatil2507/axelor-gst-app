@@ -1,12 +1,15 @@
 package com.axelor.gst.db.web;
 
 import com.axelor.gst.db.Address;
+import com.axelor.gst.db.Company;
 import com.axelor.gst.db.Contact;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
 import com.axelor.gst.db.Party;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public class GstInvoiceController {
@@ -56,10 +59,34 @@ public class GstInvoiceController {
     }
   }
 
+  @SuppressWarnings("deprecation")
   public void calculateGst(ActionRequest request, ActionResponse response) {
-
-    // Invoice invoice=request.getContext().asType(Invoice.class);
     InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
-    response.setFlash(invoiceLine.getItem());
+    Invoice invoice = request.getContext().getParentContext().asType(Invoice.class);
+    Address address = invoice.getInvoiceAddress();
+    Company company = invoice.getCompany();
+    Address address2 = company.getAddress();
+
+    float gstAmount;
+    float invoiceCgst = 0;
+    float invoiceSgst = 0;
+    float gsAmount;
+
+    gstAmount= (invoiceLine.getNetAmount().floatValue() * invoiceLine.getGstRate().floatValue()) /100;
+    
+    if (address.getState() == address2.getState()) {
+      invoiceCgst =
+          gstAmount / 2;
+      invoiceSgst =
+    		  gstAmount / 2;
+      response.setValue("cgst", invoiceCgst);
+      response.setValue("sgst", invoiceSgst);
+      
+      gsAmount=gstAmount+invoiceCgst+invoiceSgst;
+    }
+    else
+    {
+    	response.setValue("igst", gstAmount);
+    }
   }
 }
