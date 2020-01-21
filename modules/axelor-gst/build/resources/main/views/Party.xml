@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
+
+  <selection name="party.type.selection">
+    <option value="individual">Individual</option>
+    <option value="company">Company</option>
+  </selection>
+
+  <form name="party-form" title="Party" model="com.axelor.gst.db.Party">
+    <panel title="Party Detail" colSpan="8" name="partyDetailPanel">
+      <field name="reference" colSpan="4" />
+      <field name="name" colSpan="4" />
+      <field name="type" colSpan="4" />
+      <field name="gstin" colSpan="4" />
+      <field name="isCustomer" colSpan="4" />
+      <field name="isSupplier" colSpan="4" />
+    </panel>
+    <panel title="Party Contact Detail" name="partyContactDetailPanel">
+      <field name="contactList" showTitle="false" colSpan="12">
+        <editor>
+          <field name="name" />
+          <field name="type" />
+          <field name="primaryPhone"/>
+          <field name="primaryEmail"/>
+        </editor>
+      </field>
+    </panel>
+    <panel title="Party Address Detail" name="partyAddressdetailPanel">
+      <field name="addressList" showTitle="false" colSpan="12">
+        <editor>
+          <field name="line1" />
+          <field name="type" />
+          <field name="city" />
+          <field name="country" />
+        </editor>
+      </field>
+    </panel>
+  </form>
+
+  <grid name="party-grid" title="Parties" model="com.axelor.gst.db.Party"
+    edit-icon="true">
+
+    <field name="reference" />
+    <field name="name" />
+    <field name="type" />
+    <field name="isCustomer" />
+    <field name="isSupplier" />
+    <field name="gstin" />
+  </grid>
+
+  <cards name="party-cards" title="Party Details" model="com.axelor.gst.db.Party">
+    <field name="name" />
+    <field name="type" />
+    <field name="contacts" />
+    <field name="addresses" />
+    <template><![CDATA[
+      <div class="span4">
+        <img ng-if="hasImage" src="img/user.png">
+        <strong>{{name}}</strong>
+      </div>
+      <div class="span4">
+      <span ng-if="name" title="Name">Name:</span>{{name}}<br>
+      <span ng-if="type" title="Type">Type:</span>{{type}}<br>
+      <addresses>
+          <strong> {{addresses.type}} : {{addresses.line1}}</strong><br>
+          <span ng-if="addresses.city" title"City">City:</span>{{addresses.city.name}}<br>
+       </addresses>
+       <contacts>
+       <span ng-if="contacts.name" title="Name">Contact :</span>{{contacts.name}}<br>
+      </div>
+    ]]></template>
+  </cards>
+
+</object-views>

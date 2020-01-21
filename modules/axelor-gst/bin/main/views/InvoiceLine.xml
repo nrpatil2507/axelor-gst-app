@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
+
+  <form name="invoice-line-form" title="Invoice line"
+    model="com.axelor.gst.db.InvoiceLine">
+    <panel title="Invoice Line Detail" name="invoiceLinePanel">
+      <field name="product" onChange="action-record-set-product-fullname,action-record-invoce-line-set-product-gstrate"/>
+      <field name="hsbn" />
+      <field name="item" />
+      <field name="qty" />
+      <field name="price" onChange="action-invoice-product-record-set-net-amount,com.axelor.gst.db.web.GstInvoiceController:calculateGst"/>
+      <field name="netAmount"/>
+      <field name="gstRate" />
+      <field name="igst" />
+      <field name="sgst" />
+      <field name="cgst" />
+      <field name="grossAmount" />
+    </panel>
+  </form>
+
+  <action-record name="action-record-set-product-fullname" model="com.axelor.gst.db.InvoiceLine">
+  <field name="item" expr="eval:'['+ product.code +'] '+ product.name"/></action-record>
+
+  <action-record name="action-record-invoce-line-set-product-gstrate" model="com.axelor.gst.db.InvoiceLine">
+  <field name="gstRate" expr="eval:product.gstRate"/>
+  </action-record>
+
+  <action-record name="action-invoice-product-record-set-net-amount" model="com.axelor.gst.db.InvoiceLine">
+  <field name="netAmount" expr="eval:qty * price" if="#{netAmount}"/>
+  </action-record>
+
+</object-views>
