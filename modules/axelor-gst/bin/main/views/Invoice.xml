@@ -48,13 +48,10 @@
       <field name="shippingAddress" colSpan="4" />
       <field name="isInvoiceAddAsShipping" colSpan="4" onChange="action-invoice-method-set-shipping-address"/>
     </panel>
+
     <panel-related field="invoiceItemsList" target="com.axelor.gst.db.InvoiceLine"
-      name="invoiceItemsPanel">
-      <field name="product"/>
-      <field name="item" />
-      <field name="qty" />
-      <field name="price"/>
-      <field name="netAmount"/>
+      name="invoiceItemsPanel" onChange="action-invoice-method-set-total-amount">
+      
     </panel-related>
 
     <panel title="Product Amounts" name="productAmountsPanel">
@@ -115,4 +112,7 @@
  <call class="com.axelor.gst.db.web.GstInvoiceController" method="setShippingAddress"/>
 </action-method>
 
+<action-method name="action-invoice-method-set-total-amount">
+ <call class="com.axelor.gst.db.web.GstInvoiceController" method="setTotalAmount"/>
+</action-method>
 </object-views>

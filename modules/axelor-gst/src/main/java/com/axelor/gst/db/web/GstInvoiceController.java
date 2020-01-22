@@ -1,15 +1,13 @@
 package com.axelor.gst.db.web;
 
 import com.axelor.gst.db.Address;
-import com.axelor.gst.db.Company;
 import com.axelor.gst.db.Contact;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
 import com.axelor.gst.db.Party;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
-
-import java.math.BigDecimal;
+import com.ibm.icu.math.BigDecimal;
 import java.util.List;
 
 public class GstInvoiceController {
@@ -59,34 +57,25 @@ public class GstInvoiceController {
     }
   }
 
-  @SuppressWarnings("deprecation")
-  public void calculateGst(ActionRequest request, ActionResponse response) {
-    InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
-    Invoice invoice = request.getContext().getParentContext().asType(Invoice.class);
-    Address address = invoice.getInvoiceAddress();
-    Company company = invoice.getCompany();
-    Address address2 = company.getAddress();
+  public void setTotalAmount(ActionRequest request, ActionResponse response) {
+    Invoice invoice = request.getContext().asType(Invoice.class);
 
-    float gstAmount;
-    float invoiceCgst = 0;
-    float invoiceSgst = 0;
-    float gsAmount;
+    List<InvoiceLine> invoiceLine = invoice.getInvoiceItemsList();
+    float igst = 0, sgst = 0, cgst = 0, grossAmount = 0, netAmount = 0;
 
-    gstAmount= (invoiceLine.getNetAmount().floatValue() * invoiceLine.getGstRate().floatValue()) /100;
-    
-    if (address.getState() == address2.getState()) {
-      invoiceCgst =
-          gstAmount / 2;
-      invoiceSgst =
-    		  gstAmount / 2;
-      response.setValue("cgst", invoiceCgst);
-      response.setValue("sgst", invoiceSgst);
-      
-      gsAmount=gstAmount+invoiceCgst+invoiceSgst;
-    }
-    else
-    {
-    	response.setValue("igst", gstAmount);
+    if (invoiceLine != null) {
+      for (InvoiceLine invoiceLine2 : invoiceLine) {
+        igst = igst + invoiceLine2.getIgst().floatValue();
+        sgst = sgst + invoiceLine2.getSgst().floatValue();
+        cgst = cgst + invoiceLine2.getCgst().floatValue();
+        netAmount = netAmount + invoiceLine2.getNetAmount().floatValue();
+        grossAmount = grossAmount + invoiceLine2.getGrossAmount().floatValue();
+      }
+      response.setValue("netIgst", BigDecimal.valueOf(igst));
+      response.setValue(" netCgst", BigDecimal.valueOf(cgst));
+      response.setValue("netSgst", BigDecimal.valueOf(sgst));
+      response.setValue("netAmount", BigDecimal.valueOf(netAmount));
+      response.setValue("grossAmount", BigDecimal.valueOf(grossAmount));
     }
   }
 }
