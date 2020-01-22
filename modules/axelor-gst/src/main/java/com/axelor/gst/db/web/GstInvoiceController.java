@@ -15,6 +15,7 @@ public class GstInvoiceController {
 
     Invoice invoice = request.getContext().asType(Invoice.class);
     Party party = invoice.getParty();
+
     List<Contact> contact = party.getContactList();
 
     for (Contact contact2 : contact) {
@@ -43,11 +44,16 @@ public class GstInvoiceController {
     Invoice invoice = request.getContext().asType(Invoice.class);
     Party party = invoice.getParty();
     if (party != null) {
-      List<Address> address = party.getAddressList();
-      for (Address address2 : address) {
-        if (address2.getType().equals("shipping")) {
-          response.setValue("invoiceAddress", address2);
-        } else if (address2.getType().equals("default")) {
+      if (invoice.getIsInvoiceAddAsShipping() == true) {
+        response.setValue("shippingAddress", invoice.getInvoiceAddress());
+      } else {
+        List<Address> address = party.getAddressList();
+        for (Address address2 : address) {
+          if (address2.getType().equals("shipping")) {
+            response.setValue("shippingAddress", address2);
+          } else if (address2.getType().equals("default")) {
+            response.setValue("shippingAddress", address2);
+          }
         }
       }
     }

@@ -40,7 +40,7 @@ import com.axelor.db.annotations.Widget;
 import com.google.common.base.MoreObjects;
 
 @Entity
-@Table(name = "GST_INVOICE_LINE", indexes = { @Index(columnList = "product") })
+@Table(name = "GST_INVOICE_LINE", indexes = { @Index(columnList = "product"), @Index(columnList = "invoice") })
 public class InvoiceLine extends AuditableModel {
 
 	@Id
@@ -82,6 +82,10 @@ public class InvoiceLine extends AuditableModel {
 
 	@Widget(title = "Gross Amount", readonly = true)
 	private BigDecimal grossAmount = BigDecimal.ZERO;
+
+	@Widget(title = "Invoice")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private Invoice invoice;
 
 	@Widget(title = "Attributes")
 	@Basic(fetch = FetchType.LAZY)
@@ -187,6 +191,14 @@ public class InvoiceLine extends AuditableModel {
 
 	public void setGrossAmount(BigDecimal grossAmount) {
 		this.grossAmount = grossAmount;
+	}
+
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
 	}
 
 	public String getAttrs() {

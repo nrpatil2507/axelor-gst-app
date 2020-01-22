@@ -42,15 +42,14 @@
       <field name="priority" colSpan="4" />
       <field name="company" colSpan="4" />
       <field name="party" colSpan="4"
-        onChange="action-invoice-party-method-set-primary-contact,action-invoice-method-set-invoice-address" />
-      <field name="partyContact" colSpan="4" />
+        onChange="action-invoice-party-method-set-primary-contact,action-invoice-method-set-invoice-address,action-invoice-method-set-shipping-address" />
+      <field name="partyContact" colSpan="4"/>
     </panel>
     <panel title="Address" name="addressPanel">
-      <field name="invoiceAddress" colSpan="4" />
+      <field name="invoiceAddress" colSpan="4"/>
+      <field name="isInvoiceAddAsShipping" colSpan="4" onChange="action-invoice-method-set-shipping-address"/>
       <field name="shippingAddress" colSpan="4"
-        hideIf="isInvoiceAddAsShipping=true" />
-      <field name="isInvoiceAddAsShipping" colSpan="4"
-        onChange="action-invoice-method-set-shipping-address" />
+         hideIf="isInvoiceAddAsShipping"/>
     </panel>
 
     <panel-related field="invoiceItemsList" target="com.axelor.gst.db.InvoiceLine"
@@ -124,6 +123,10 @@
   <action-method name="action-invoice-method-set-invoice-address">
     <call class="com.axelor.gst.db.web.GstInvoiceController" method="setInvoiceAddress" />
   </action-method>
+
+<action-attrs name="action-invoice-attrs-set-shipping-address">
+<attribute name="value" for="shippingAddress" expr="eval:invoiceAddress" if="isInvoiceAddAsShipping"/>
+</action-attrs>
 
   <action-method name="action-invoice-method-set-shipping-address">
     <call class="com.axelor.gst.db.web.GstInvoiceController" method="setShippingAddress" />

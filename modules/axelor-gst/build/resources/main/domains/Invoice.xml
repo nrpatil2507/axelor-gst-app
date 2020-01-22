@@ -20,7 +20,7 @@
     <decimal name="netCgst" readonly="true" title="Net CGST"/>
     <decimal name="netSgst" readonly="true" title="Net SGST"/>
     <decimal name="grossAmount" readonly="true" title="Gross Amount"/>
-    <one-to-many name="invoiceItemsList" ref="InvoiceLine" title="Invoice Items List"/>
+    <one-to-many name="invoiceItemsList" ref="InvoiceLine" title="Invoice Items List" mappedBy="invoice"/>
     <boolean name="isInvoiceAddAsShipping" default="true" title="Invoice Address As Shipping" />
   </entity>
 </domain-models>

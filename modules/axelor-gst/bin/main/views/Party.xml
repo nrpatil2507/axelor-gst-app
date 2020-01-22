@@ -24,6 +24,8 @@
           <field name="type" />
           <field name="primaryPhone"/>
           <field name="primaryEmail"/>
+          <field name="secondaryPhone"/>
+          <field name="secondaryEmail"/>
         </editor>
       </field>
     </panel>
