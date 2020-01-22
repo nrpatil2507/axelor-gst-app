@@ -160,34 +160,32 @@
     title="Invoice">
     <view type="grid" name="invoice-grid" />
     <view type="form" name="invoice-form" />
+    <view type="kanban" name="invoice-kanban"/>
   </action-view>
 
   <action-view name="draft.invoices" model="com.axelor.gst.db.Invoice"
     title="Draft Invoices">
     <view type="grid" name="invoice-grid" />
-    <domain>self.status = :invoiceStatus</domain>
-    <context name="invoiceStatus" expr="draft" />
+    <domain>self.status='draft'</domain>
   </action-view>
 
   <action-view name="validated.invoices" model="com.axelor.gst.db.Invoice"
     title="Validated Invoices">
     <view type="grid" name="invoice-grid" />
-    <domain>self.status = :invoiceStatus</domain>
-    <context name="invoiceStatus" expr="validated" />
+    <domain>self.status='validated'</domain>
   </action-view>
 
   <action-view name="paid.invoices" model="com.axelor.gst.db.Invoice"
     title="Paid Invoices">
     <view type="grid" name="invoice-grid" />
-    <domain>self.status = :invoiceStatus</domain>
-    <context name="invoiceStatus" expr="paid" />
+    <domain>self.status='paid'</domain>
+
   </action-view>
 
   <action-view name="cancelled.invoices" model="com.axelor.gst.db.Invoice"
     title="Cancelled Invoices">
     <view type="grid" name="invoice-grid" />
-    <domain>self.status = :invoiceStatus</domain>
-    <context name="invoiceStatus" expr="cancelled" />
+    <domain>self.status='cancelled'</domain>
   </action-view>
 
   <action-view name="company.all" model="com.axelor.gst.db.Company"

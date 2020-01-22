@@ -16,7 +16,7 @@
     <field name="company" />
     <field name="reference" />
     <field name="invoiceDateT" />
-    <field name="party"/>
+    <field name="party" />
     <field name="invoiceAddress" />
     <field name="shippingAddress" />
     <field name="netAmount" />
@@ -27,7 +27,8 @@
     <field name="isInvoiceAddAsShipping" />
   </grid>
 
-  <form name="invoice-form" title="Invoice" model="com.axelor.gst.db.Invoice" onNew="action-invoice-record-set-invoice-date"  >
+  <form name="invoice-form" title="Invoice" model="com.axelor.gst.db.Invoice"
+    onNew="action-invoice-record-set-invoice-date">
     <toolbar>
       <button name="printInvoiceBtn" title="Print" icon="fa-print" />
     </toolbar>
@@ -40,20 +41,21 @@
       <field name="invoiceDateT" colSpan="4" />
       <field name="priority" colSpan="4" />
       <field name="company" colSpan="4" />
-      <field name="party" colSpan="4" onChange="action-invoice-party-method-set-primary-contact,action-invoice-method-set-invoice-address,action-invoice-method-set-shipping-address"/>
+      <field name="party" colSpan="4"
+        onChange="action-invoice-party-method-set-primary-contact,action-invoice-method-set-invoice-address" />
       <field name="partyContact" colSpan="4" />
     </panel>
     <panel title="Address" name="addressPanel">
       <field name="invoiceAddress" colSpan="4" />
-      <field name="shippingAddress" colSpan="4" />
-      <field name="isInvoiceAddAsShipping" colSpan="4" onChange="action-invoice-method-set-shipping-address"/>
+      <field name="shippingAddress" colSpan="4"
+        hideIf="isInvoiceAddAsShipping=true" showIf="isInvoiceAddAsShipping=false"/>
+      <field name="isInvoiceAddAsShipping" colSpan="4"
+        onChange="action-invoice-method-set-shipping-address" />
     </panel>
 
     <panel-related field="invoiceItemsList" target="com.axelor.gst.db.InvoiceLine"
       name="invoiceItemsPanel" onChange="action-invoice-method-set-total-amount">
-      
     </panel-related>
-
     <panel title="Product Amounts" name="productAmountsPanel">
       <field name="netAmount" />
       <field name="netIgst" />
@@ -61,7 +63,6 @@
       <field name="netSgst" />
       <field name="grossAmount" />
     </panel>
-
     <panel sidebar="true" colSpan="4">
       <button name="draftBtn" title="Draft" css="btn-primary"
         hidden="true" onClick="action-invoice-status-attrs-change-on-draft"
@@ -79,6 +80,22 @@
         onClick="action-invoice-status-attrs-change-on-cancelled" hideIf="status == 'cancelled'" />
     </panel>
   </form>
+
+  <kanban name="invoice-kanban" title="Invoice Detail" model="com.axelor.gst.db.Invoice"
+    columnBy="status" sequenceBy="priority" limit="10" draggable="true">
+    <field name="invoiceItemsList.item" />
+    <field name="invoiceDateT" />
+    <field name="party.name" />
+    <field name="grossAmount" />
+    <template><![CDATA[
+  <h4>{{party.name}}</h4>
+  <div class="card-body">{{invoiceItemsList.item}}</div>
+  <div class="card-body">{{grossAmount}}</div>
+  <div class="card-footer">
+    <i class='fa fa-clock-o'></i> <span>{{invoiceDateT|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+  </div>
+  ]]></template>
+  </kanban>
 
   <action-attrs name="action-invoice-status-attrs-change-on-draft">
     <attribute name="value" for="status" expr="#{status='draft'}" />
@@ -98,21 +115,21 @@
   </action-attrs>
 
   <action-attrs name="action-invoice-record-set-invoice-date">
-    <attribute name="value" for="invoiceDateT" expr="#{__time__}"/>
+    <attribute name="value" for="invoiceDateT" expr="#{__time__}" />
   </action-attrs>
 
   <action-method name="action-invoice-party-method-set-primary-contact">
-  <call class="com.axelor.gst.db.web.GstInvoiceController" method="setPrimaryContact"/>
+    <call class="com.axelor.gst.db.web.GstInvoiceController" method="setPrimaryContact" />
   </action-method>
-<action-method name="action-invoice-method-set-invoice-address">
- <call class="com.axelor.gst.db.web.GstInvoiceController" method="setInvoiceAddress"/>
-</action-method>
+  <action-method name="action-invoice-method-set-invoice-address">
+    <call class="com.axelor.gst.db.web.GstInvoiceController" method="setInvoiceAddress" />
+  </action-method>
 
-<action-method name="action-invoice-method-set-shipping-address">
- <call class="com.axelor.gst.db.web.GstInvoiceController" method="setShippingAddress"/>
-</action-method>
+  <action-method name="action-invoice-method-set-shipping-address">
+    <call class="com.axelor.gst.db.web.GstInvoiceController" method="setShippingAddress" />
+  </action-method>
 
-<action-method name="action-invoice-method-set-total-amount">
- <call class="com.axelor.gst.db.web.GstInvoiceController" method="setTotalAmount"/>
-</action-method>
+  <action-method name="action-invoice-method-set-total-amount">
+    <call class="com.axelor.gst.db.web.GstInvoiceController" method="setTotalAmount" />
+  </action-method>
 </object-views>

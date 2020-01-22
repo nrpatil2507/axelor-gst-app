@@ -7,7 +7,6 @@ import com.axelor.gst.db.InvoiceLine;
 import com.axelor.gst.db.Party;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
-import com.ibm.icu.math.BigDecimal;
 import java.util.List;
 
 public class GstInvoiceController {
@@ -28,13 +27,14 @@ public class GstInvoiceController {
   public void setInvoiceAddress(ActionRequest request, ActionResponse response) {
     Invoice invoice = request.getContext().asType(Invoice.class);
     Party party = invoice.getParty();
-    List<Address> address = party.getAddressList();
-
-    for (Address address2 : address) {
-      if (address2.getType().equals("invoice")) {
-        response.setValue("invoiceAddress", address2);
-      } else if (address2.getType().equals("default")) {
-        response.setValue("invoiceAddress", address2);
+    if (party != null) {
+      List<Address> address = party.getAddressList();
+      for (Address address2 : address) {
+        if (address2.getType().equals("invoice")) {
+          response.setValue("invoiceAddress", address2);
+        } else if (address2.getType().equals("default")) {
+          response.setValue("invoiceAddress", address2);
+        }
       }
     }
   }
@@ -42,16 +42,12 @@ public class GstInvoiceController {
   public void setShippingAddress(ActionRequest request, ActionResponse response) {
     Invoice invoice = request.getContext().asType(Invoice.class);
     Party party = invoice.getParty();
-    List<Address> address = party.getAddressList();
-
-    if (invoice.getIsInvoiceAddAsShipping() == true) {
-      response.setValue("shippingAddress", invoice.getInvoiceAddress());
-    } else {
+    if (party != null) {
+      List<Address> address = party.getAddressList();
       for (Address address2 : address) {
         if (address2.getType().equals("shipping")) {
           response.setValue("invoiceAddress", address2);
         } else if (address2.getType().equals("default")) {
-          response.setValue("invoiceAddress", address2);
         }
       }
     }
@@ -71,11 +67,11 @@ public class GstInvoiceController {
         netAmount = netAmount + invoiceLine2.getNetAmount().floatValue();
         grossAmount = grossAmount + invoiceLine2.getGrossAmount().floatValue();
       }
-      response.setValue("netIgst", BigDecimal.valueOf(igst));
-      response.setValue(" netCgst", BigDecimal.valueOf(cgst));
-      response.setValue("netSgst", BigDecimal.valueOf(sgst));
-      response.setValue("netAmount", BigDecimal.valueOf(netAmount));
-      response.setValue("grossAmount", BigDecimal.valueOf(grossAmount));
+      response.setValue("netIgst", igst);
+      response.setValue("netCgst", cgst);
+      response.setValue("netSgst", sgst);
+      response.setValue("netAmount", netAmount);
+      response.setValue("grossAmount", grossAmount);
     }
   }
 }
