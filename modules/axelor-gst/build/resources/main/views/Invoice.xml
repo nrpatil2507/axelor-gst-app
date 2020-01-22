@@ -10,8 +10,7 @@
     <option value="cancelled">Cancelled</option>
   </selection>
 
-  <grid name="invoice-grid" title="Invoices" model="com.axelor.gst.db.Invoice"
-    edit-icon="true">
+  <grid name="invoice-grid" title="Invoices" model="com.axelor.gst.db.Invoice">
     <field name="status" />
     <field name="company" />
     <field name="reference" />
@@ -30,7 +29,8 @@
   <form name="invoice-form" title="Invoice" model="com.axelor.gst.db.Invoice"
     onNew="action-invoice-record-set-invoice-date">
     <toolbar>
-      <button name="printInvoiceBtn" title="Print" icon="fa-print" />
+      <button name="printInvoiceBtn" title="Print" icon="fa-print"
+        onClick="action-invoice-report-print-invoice" />
     </toolbar>
     <panel title="Invoice Status" colSpan="8" name="invoiceStatusPanel">
       <field name="status" widget="nav-select" showTitle="false"
@@ -42,14 +42,14 @@
       <field name="priority" colSpan="4" />
       <field name="company" colSpan="4" />
       <field name="party" colSpan="4"
-        onChange="action-invoice-party-method-set-primary-contact,action-invoice-method-set-invoice-address,action-invoice-method-set-shipping-address" />
-      <field name="partyContact" colSpan="4"/>
+        onChange="action-party-group-set-party-detail" />
+      <field name="partyContact" colSpan="4" />
     </panel>
     <panel title="Address" name="addressPanel">
-      <field name="invoiceAddress" colSpan="4"/>
-      <field name="isInvoiceAddAsShipping" colSpan="4" onChange="action-invoice-method-set-shipping-address"/>
-      <field name="shippingAddress" colSpan="4"
-         hideIf="isInvoiceAddAsShipping"/>
+      <field name="invoiceAddress" colSpan="4" />
+      <field name="isInvoiceAddAsShipping" colSpan="4"
+        onChange="action-invoice-method-set-shipping-address" />
+      <field name="shippingAddress" colSpan="4" hideIf="isInvoiceAddAsShipping" />
     </panel>
 
     <panel-related field="invoiceItemsList" target="com.axelor.gst.db.InvoiceLine"
@@ -82,51 +82,59 @@
 
   <kanban name="invoice-kanban" title="Invoice Detail" model="com.axelor.gst.db.Invoice"
     columnBy="status" sequenceBy="priority" limit="10" draggable="true">
+    <field name="reference"/>
     <field name="invoiceItemsList.item" />
     <field name="invoiceDateT" />
     <field name="party.name" />
     <field name="grossAmount" />
+    <hilite color="info" if="status == 'draft'"/>
+    <hilite color="warning" if="status=='paid'"/>
+    <hilite color="success" if="status=='validated'"/>
+    <hilite color="danger" if="status=='cancelled'"/>
+
     <template><![CDATA[
-  <h4>{{party.name}}</h4>
-  <div class="card-body">{{invoiceItemsList.item}}</div>
-  <div class="card-body">{{grossAmount}}</div>
-  <div class="card-footer">
-    <i class='fa fa-clock-o'></i> <span>{{invoiceDateT|date:'yyyy-MM-dd HH:mm:ss'}}</span>
-  </div>
-  ]]></template>
+        <h4>{{reference}}</h4>
+         <div class="card-body">
+                <dl>
+                  <dt>Party Name:</dt><dd ng-show="record.party.name">{{record.party.name}}</dd>
+                    <dt ng-show="invoiceItemsList.item" x-translate>Product</dt><dd ng-show="record.invoiceItemsList.item">{{record.invoiceItemsList.item}}</dd>
+                    <dt ng-show="record.grossAmount" x-translate>Amount</dt><dd ng-show="record.grossAmount">{{$fmt('grossAmount')}}</dd>
+                </dl>
+            </div>
+        <div class="card-footer">
+          <i class='fa fa-clock-o'></i><span>{{invoiceDateT|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+        </div>
+      ]]></template>
   </kanban>
 
   <action-attrs name="action-invoice-status-attrs-change-on-draft">
-    <attribute name="value" for="status" expr="#{status='draft'}" />
+    <attribute name="value" for="status" expr="eval: status='draft'" />
   </action-attrs>
 
   <action-attrs name="action-invoice-status-attrs-change-on-validated">
-    <attribute name="value" for="status" expr="#{status='validated'}" />
+    <attribute name="value" for="status" expr="eval: status='validated'" />
   </action-attrs>
 
   <action-attrs name="action-invoice-status-attrs-change-on-paid">
-    <attribute name="value" for="status" expr="#{status='paid'}" />
+    <attribute name="value" for="status" expr="eval:status='paid'" />
   </action-attrs>
 
   <action-attrs name="action-invoice-status-attrs-change-on-cancelled">
-    <attribute name="value" for="status" expr="#{status='cancelled'}"
+    <attribute name="value" for="status" expr="eval: status='cancelled'"
       if="#{!btnCancel}" />
   </action-attrs>
 
   <action-attrs name="action-invoice-record-set-invoice-date">
-    <attribute name="value" for="invoiceDateT" expr="#{__time__}" />
+    <attribute name="value" for="invoiceDateT" expr="eval:__time__" />
   </action-attrs>
 
   <action-method name="action-invoice-party-method-set-primary-contact">
     <call class="com.axelor.gst.db.web.GstInvoiceController" method="setPrimaryContact" />
   </action-method>
+
   <action-method name="action-invoice-method-set-invoice-address">
     <call class="com.axelor.gst.db.web.GstInvoiceController" method="setInvoiceAddress" />
   </action-method>
-
-<action-attrs name="action-invoice-attrs-set-shipping-address">
-<attribute name="value" for="shippingAddress" expr="eval:invoiceAddress" if="isInvoiceAddAsShipping"/>
-</action-attrs>
 
   <action-method name="action-invoice-method-set-shipping-address">
     <call class="com.axelor.gst.db.web.GstInvoiceController" method="setShippingAddress" />
@@ -135,4 +143,16 @@
   <action-method name="action-invoice-method-set-total-amount">
     <call class="com.axelor.gst.db.web.GstInvoiceController" method="setTotalAmount" />
   </action-method>
+
+  <action-report output="invoice-${date}${time}"
+    name="action-invoice-report-print-invoice" design="Invoice_Report.rptdesign">
+    <param name="invoiceId" expr="eval:id" />
+  </action-report>
+
+  <action-group name="action-party-group-set-party-detail">
+    <action name="action-invoice-party-method-set-primary-contact" />
+    <action name="action-invoice-method-set-invoice-address" />
+    <action name="action-invoice-method-set-shipping-address" />
+  </action-group>
+
 </object-views>

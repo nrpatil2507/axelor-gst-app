@@ -20,7 +20,7 @@
   </form>
 
   <grid name="bank-account-grid" title="Bank accounts"
-    model="com.axelor.gst.db.BankAccount" edit-icon="true">
+    model="com.axelor.gst.db.BankAccount">
     <field name="bank" />
     <field name="accountNo" />
     <field name="ifsc" />

@@ -15,12 +15,14 @@ public class GstInvoiceController {
 
     Invoice invoice = request.getContext().asType(Invoice.class);
     Party party = invoice.getParty();
-
-    List<Contact> contact = party.getContactList();
-
-    for (Contact contact2 : contact) {
-      if (contact2.getType().equals("primary")) {
-        response.setValue("partyContact", contact2 != null ? contact2 : null);
+    if (party != null) {
+      List<Contact> contactList = party.getContactList();
+      if (contactList != null) {
+        for (Contact contact : contactList) {
+          if (contact.getType().equals("primary")) {
+            response.setValue("partyContact", contact != null ? contact : null);
+          }
+        }
       }
     }
   }
@@ -29,12 +31,14 @@ public class GstInvoiceController {
     Invoice invoice = request.getContext().asType(Invoice.class);
     Party party = invoice.getParty();
     if (party != null) {
-      List<Address> address = party.getAddressList();
-      for (Address address2 : address) {
-        if (address2.getType().equals("invoice")) {
-          response.setValue("invoiceAddress", address2);
-        } else if (address2.getType().equals("default")) {
-          response.setValue("invoiceAddress", address2);
+      List<Address> addressList = party.getAddressList();
+      if (addressList != null) {
+        for (Address address : addressList) {
+          if (address.getType().equals("invoice")) {
+            response.setValue("invoiceAddress", address);
+          } else if (address.getType().equals("default")) {
+            response.setValue("invoiceAddress", address);
+          }
         }
       }
     }
@@ -47,12 +51,14 @@ public class GstInvoiceController {
       if (invoice.getIsInvoiceAddAsShipping() == true) {
         response.setValue("shippingAddress", invoice.getInvoiceAddress());
       } else {
-        List<Address> address = party.getAddressList();
-        for (Address address2 : address) {
-          if (address2.getType().equals("shipping")) {
-            response.setValue("shippingAddress", address2);
-          } else if (address2.getType().equals("default")) {
-            response.setValue("shippingAddress", address2);
+        List<Address> addressList = party.getAddressList();
+        if (addressList != null) {
+          for (Address address : addressList) {
+            if (address.getType().equals("shipping")) {
+              response.setValue("shippingAddress", address);
+            } else if (address.getType().equals("default")) {
+              response.setValue("shippingAddress", address);
+            }
           }
         }
       }
@@ -62,16 +68,16 @@ public class GstInvoiceController {
   public void setTotalAmount(ActionRequest request, ActionResponse response) {
     Invoice invoice = request.getContext().asType(Invoice.class);
 
-    List<InvoiceLine> invoiceLine = invoice.getInvoiceItemsList();
+    List<InvoiceLine> invoiceLineList = invoice.getInvoiceItemsList();
     float igst = 0, sgst = 0, cgst = 0, grossAmount = 0, netAmount = 0;
 
-    if (invoiceLine != null) {
-      for (InvoiceLine invoiceLine2 : invoiceLine) {
-        igst = igst + invoiceLine2.getIgst().floatValue();
-        sgst = sgst + invoiceLine2.getSgst().floatValue();
-        cgst = cgst + invoiceLine2.getCgst().floatValue();
-        netAmount = netAmount + invoiceLine2.getNetAmount().floatValue();
-        grossAmount = grossAmount + invoiceLine2.getGrossAmount().floatValue();
+    if (invoiceLineList != null) {
+      for (InvoiceLine invoiceLine : invoiceLineList) {
+        igst = igst + invoiceLine.getIgst().floatValue();
+        sgst = sgst + invoiceLine.getSgst().floatValue();
+        cgst = cgst + invoiceLine.getCgst().floatValue();
+        netAmount = netAmount + invoiceLine.getNetAmount().floatValue();
+        grossAmount = grossAmount + invoiceLine.getGrossAmount().floatValue();
       }
       response.setValue("netIgst", igst);
       response.setValue("netCgst", cgst);

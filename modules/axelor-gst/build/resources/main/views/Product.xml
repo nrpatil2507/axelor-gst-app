@@ -19,8 +19,7 @@
     </panel>
   </form>
 
-  <grid name="product-grid" title="Products" model="com.axelor.gst.db.Product"
-    edit-icon="true">
+  <grid name="product-grid" title="Products" model="com.axelor.gst.db.Product">
     <toolbar>
     <button name="createInvoiceBtn" title="Create invoice" icon="fa-print"/>
     <button name="printBtn" title="Print" icon="fa-print"/>

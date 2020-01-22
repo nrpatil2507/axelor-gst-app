@@ -41,9 +41,7 @@
     </panel>
   </form>
 
-  <grid name="party-grid" title="Parties" model="com.axelor.gst.db.Party"
-    edit-icon="true">
-
+  <grid name="party-grid" title="Parties" model="com.axelor.gst.db.Party">
     <field name="reference" />
     <field name="name" />
     <field name="type" />
@@ -51,7 +49,6 @@
     <field name="isSupplier" />
     <field name="gstin" />
   </grid>
-
   <cards name="party-cards" title="Party Details" model="com.axelor.gst.db.Party">
     <field name="name" />
     <field name="type" />

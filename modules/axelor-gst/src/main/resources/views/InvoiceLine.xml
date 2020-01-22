@@ -11,7 +11,7 @@
       <field name="hsbn" />
       <field name="item" />
       <field name="qty" />
-      <field name="price" onChange="action-invoice-product-record-set-net-amount,action-invoice-line-method-calculate-amounts"/>
+      <field name="price" onChange="action-invoice-line-group-set-total-gst-amount"/>
       <field name="netAmount"/>
       <field name="gstRate" />
       <field name="igst" />
@@ -43,11 +43,16 @@
   </action-record>
 
   <action-record name="action-invoice-product-record-set-net-amount" model="com.axelor.gst.db.InvoiceLine">
-  <field name="netAmount" expr="eval:qty * price" if="#{netAmount}"/>
+  <field name="netAmount" expr="eval:qty * price"/>
   </action-record>
 
   <action-method name="action-invoice-line-method-calculate-amounts" model="com.axelor.gst.db.InvoiceLine">
   <call class="com.axelor.gst.db.web.GstInvoiceLineController" method="calculateGst"/>
   </action-method>
+
+  <action-group name="action-invoice-line-group-set-total-gst-amount">
+  <action name="action-invoice-product-record-set-net-amount"/>
+  <action name="action-invoice-line-method-calculate-amounts"/>
+  </action-group>
 
 </object-views>

@@ -3,8 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
 
-  <grid name="sequence-grid" title="Sequences" model="com.axelor.gst.db.Sequence"
-    edit-icon="true">
+  <grid name="sequence-grid" title="Sequences" model="com.axelor.gst.db.Sequence">
     <field name="prefix" />
     <field name="sufix" />
     <field name="padding" />

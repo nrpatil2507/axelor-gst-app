@@ -11,6 +11,7 @@ public class GstInvoiceLineController {
 
   @SuppressWarnings("deprecation")
   public void calculateGst(ActionRequest request, ActionResponse response) {
+
     InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
     Invoice invoice = request.getContext().getParentContext().asType(Invoice.class);
 

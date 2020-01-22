@@ -23,8 +23,7 @@
     </panel>
   </form>
 
-  <grid name="address-grid" title="Addresses" model="com.axelor.gst.db.Address"
-    edit-icon="true">
+  <grid name="address-grid" title="Addresses" model="com.axelor.gst.db.Address">
     <field name="type" />
     <field name="line1" />
     <field name="line2" />

@@ -8,8 +8,7 @@
       <field name="name" />
     </panel>
   </form>
-  <grid name="country-grid" title="Countries" model="com.axelor.gst.db.Country"
-    edit-icon="true">
+  <grid name="country-grid" title="Countries" model="com.axelor.gst.db.Country">
     <field name="name" />
   </grid>
 </object-views>
