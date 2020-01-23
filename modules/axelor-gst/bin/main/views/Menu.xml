@@ -9,7 +9,11 @@
 
   <!-- Main menu dashboard -->
   <menuitem name="menu-dashboard" parent="menu-gst-app" title="Dashboard"
-    icon="fa fa-dashboard" />
+    icon="fa fa-dashboard" action="dashboard.all" />
+
+  <action-view name="dashboard.all" title="Dashboard">
+    <view type="dashboard" name="gst-dashboard" />
+  </action-view>
 
   <!-- Main menu party -->
   <menuitem name="menu-party" parent="menu-gst-app" title="Party"
@@ -160,7 +164,7 @@
     title="Invoice">
     <view type="grid" name="invoice-grid" />
     <view type="form" name="invoice-form" />
-    <view type="kanban" name="invoice-kanban"/>
+    <view type="kanban" name="invoice-kanban" />
   </action-view>
 
   <action-view name="draft.invoices" model="com.axelor.gst.db.Invoice"

@@ -27,7 +27,7 @@
   </grid>
 
   <form name="invoice-form" title="Invoice" model="com.axelor.gst.db.Invoice"
-    onNew="action-invoice-record-set-invoice-date">
+    onNew="action-invoice-record-set-invoice-date" onLoad="action-invoice-method-set-reference">
     <toolbar>
       <button name="printInvoiceBtn" title="Print" icon="fa-print"
         onClick="action-invoice-report-print-invoice" />
@@ -37,7 +37,7 @@
         colSpan="12" />
     </panel>
     <panel title="Invoice Detail" name="invoiceDetailPanel">
-      <field name="reference" colSpan="4" />
+      <field name="reference" colSpan="4"/>
       <field name="invoiceDateT" colSpan="4" />
       <field name="priority" colSpan="4" />
       <field name="company" colSpan="4" />
@@ -68,7 +68,7 @@
         showIf="status == 'cancelled' || status == 'validated'" />
 
       <button name="validateBtn" title="Validated" css="btn-success"
-        onClick="action-invoice-status-attrs-change-on-validated" hidden="true"
+        onClick="action-invoice-status-attrs-change-on-validated,action-invoice-method-set-reference" hidden="true"
         showIf="status == 'draft' || status=='paid'" />
 
       <button name="paidBtn" title="Paid" css="btn-warning"
@@ -142,6 +142,10 @@
 
   <action-method name="action-invoice-method-set-total-amount">
     <call class="com.axelor.gst.db.web.GstInvoiceController" method="setTotalAmount" />
+  </action-method>
+
+   <action-method name="action-invoice-method-set-reference">
+    <call class="com.axelor.gst.db.web.GstSequenceController" method="setInvoiceSequence"/>
   </action-method>
 
   <action-report output="invoice-${date}${time}"

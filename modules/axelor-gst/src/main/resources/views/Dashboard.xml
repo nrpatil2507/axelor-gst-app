@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
+
+	<dashboard title="Dashboard" name="gst-dashboard">
+		<dashlet action="chart:chart.invoice.per.customer" />
+		<dashlet action="chart:chart.customer.per.state" />
+		<dashlet action="chart:chart.invoice.per.status" />
+		<dashlet action="chart:chart.invoice.per.status.number.of.invoice" />
+		<dashlet action="unpaid.older.invoices" height="350" width="350"
+			colSpan="12" />
+	</dashboard>
+
+	<chart name="chart.invoice.per.status" title="Invoice per status by amount">
+		<dataset type="jpql">
+  			<![CDATA[
+   				SELECT
+      			SUM(grossAmount) AS amount,
+       			status as status
+  				FROM
+      			Invoice
+  				GROUP BY
+      			status
+  			]]>
+ 	   </dataset>
+		<category key="status" type="text" title="status" />
+		<series key="amount" groupBy="status" type="bar" />
+	</chart>
+
+	<chart name="chart.invoice.per.status.number.of.invoice" title="Invoice per status by number of invoice">
+		<dataset type="jpql">
+  		<![CDATA[
+   		SELECT
+      	count(*) as cnt,
+       	status as status
+  		FROM
+      	Invoice
+  		GROUP BY
+      	status
+  		ORDER BY cnt
+  		]]>
+  		</dataset>
+		<category key="status" type="text" title="status" />
+		<series key="cnt" groupBy="status" type="line" />
+	</chart>
+
+	<chart name="chart.invoice.per.customer" title="Unpaid Invoices per customer"
+		onInit="action-chart-attrs-on-init-set-dates">
+		<search-fields>
+			<field type="date" name="fromDate" title="From Date" />
+			<field type="date" name="toDate" title="To Date" />
+		</search-fields>
+		<dataset type="sql">
+ 	 	<![CDATA[
+   		select 
+   		p.name as customer,count(*) as invoice 
+   		from gst_invoice as g 
+   		left join gst_party as p on p.id=g.party 
+   		where g.status='draft' or g.status='validated'
+   		and p.is_customer='true' 
+   		and DATE(g.invoice_datet) >= DATE(:fromDate) and DATE(g.invoice_datet) <= DATE(:toDate)
+  		 group by p.name
+
+  		]]>
+  		</dataset>
+		<category key="customer" type="text" />
+		<series key="invoice" groupBy="customer" type="bar" />
+	</chart>
+
+	<chart name="chart.customer.per.state" title="Customer per State">
+		<dataset type="sql">
+  		<![CDATA[
+		select p.name as cname,count(*) as customer,st.name as state from gst_party as p
+		,gst_party_address_list as addlist
+		,gst_address as add
+		,gst_state as st 
+		where p.id=addlist.gst_party
+	 	and 
+		add.id=addlist.address_list 
+		and add.state=st.id 
+		group by st.name,p.name
+  		]]>
+	 	</dataset>
+		<category key="state" type="text" />
+		<series key="customer" groupBy="state" type="pie" />
+	</chart>
+
+	<action-view name="unpaid.older.invoices" title="Invoices Older Than Month"
+		model="com.axelor.gst.db.Invoice">
+		<view type="grid" name="invoice-grid"/>
+		<domain>self.invoiceDateT &lt; date(now())-30 and (self.status = 'validated' or self.status= 'draft')</domain>
+	</action-view>
+
+	<action-attrs name="action-chart-attrs-on-init-set-dates">
+		<attribute name="value" for="toDate" expr="eval:__time__" />
+		<attribute name="value" for="fromDate"
+			expr="eval:__date__.withDayOfMonth(1)" />
+	</action-attrs>
+
+</object-views>
