@@ -47,7 +47,7 @@
   </action-record>
 
   <action-method name="action-invoice-line-method-calculate-amounts" model="com.axelor.gst.db.InvoiceLine">
-  <call class="com.axelor.gst.db.web.GstInvoiceLineController" method="calculateGst"/>
+  <call class="com.axelor.gst.db.web.GstInvoiceController" method="calculateGst"/>
   </action-method>
 
   <action-group name="action-invoice-line-group-set-total-gst-amount">

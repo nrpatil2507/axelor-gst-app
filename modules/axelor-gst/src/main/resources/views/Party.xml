@@ -8,7 +8,7 @@
     <option value="company">Company</option>
   </selection>
 
-  <form name="party-form" title="Party" model="com.axelor.gst.db.Party">
+  <form name="party-form" title="Party" model="com.axelor.gst.db.Party" onSave="com.axelor.gst.db.web.GstSequenceController:setPartySequence">
     <panel title="Party Detail" colSpan="8" name="partyDetailPanel">
       <field name="reference" colSpan="4" />
       <field name="name" colSpan="4" />

@@ -1,89 +1,54 @@
 package com.axelor.gst.db.web;
 
-import com.axelor.gst.db.Address;
-import com.axelor.gst.db.Contact;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
-import com.axelor.gst.db.Party;
+import com.axelor.gst.db.service.GstInvoiceService;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
-import java.util.List;
+import com.google.inject.Inject;
 
 public class GstInvoiceController {
+
+  @Inject private GstInvoiceService gstInvoiceService;
 
   public void setPrimaryContact(ActionRequest request, ActionResponse response) {
 
     Invoice invoice = request.getContext().asType(Invoice.class);
-    Party party = invoice.getParty();
-    if (party != null) {
-      List<Contact> contactList = party.getContactList();
-      if (contactList != null) {
-        for (Contact contact : contactList) {
-          if (contact.getType().equals("primary")) {
-            response.setValue("partyContact", contact != null ? contact : null);
-          }
-        }
-      }
-    }
+    invoice = gstInvoiceService.setPartyContact(invoice);
+    response.setValue("partyContact", invoice.getPartyContact());
   }
 
   public void setInvoiceAddress(ActionRequest request, ActionResponse response) {
     Invoice invoice = request.getContext().asType(Invoice.class);
-    Party party = invoice.getParty();
-    if (party != null) {
-      List<Address> addressList = party.getAddressList();
-      if (addressList != null) {
-        for (Address address : addressList) {
-          if (address.getType().equals("invoice")) {
-            response.setValue("invoiceAddress", address);
-          } else if (address.getType().equals("default")) {
-            response.setValue("invoiceAddress", address);
-          }
-        }
-      }
-    }
+    invoice = gstInvoiceService.setInvoiceAdd(invoice);
+    response.setValue("invoiceAddress", invoice.getInvoiceAddress());
   }
 
   public void setShippingAddress(ActionRequest request, ActionResponse response) {
     Invoice invoice = request.getContext().asType(Invoice.class);
-    Party party = invoice.getParty();
-    if (party != null) {
-      if (invoice.getIsInvoiceAddAsShipping() == true) {
-        response.setValue("shippingAddress", invoice.getInvoiceAddress());
-      } else {
-        List<Address> addressList = party.getAddressList();
-        if (addressList != null) {
-          for (Address address : addressList) {
-            if (address.getType().equals("shipping")) {
-              response.setValue("shippingAddress", address);
-            } else if (address.getType().equals("default")) {
-              response.setValue("shippingAddress", address);
-            }
-          }
-        }
-      }
-    }
+    invoice = gstInvoiceService.setShiipingAdd(invoice);
+    response.setValue("shippingAddress", invoice.getShippingAddress());
   }
 
   public void setTotalAmount(ActionRequest request, ActionResponse response) {
     Invoice invoice = request.getContext().asType(Invoice.class);
+    invoice = gstInvoiceService.setGstAmount(invoice);
+    response.setValue("netIgst", invoice.getNetIgst());
+    response.setValue("netCgst", invoice.getNetCgst());
+    response.setValue("netSgst", invoice.getNetSgst());
+    response.setValue("netAmount", invoice.getNetAmount());
+    response.setValue("grossAmount", invoice.getGrossAmount());
+  }
 
-    List<InvoiceLine> invoiceLineList = invoice.getInvoiceItemsList();
-    float igst = 0, sgst = 0, cgst = 0, grossAmount = 0, netAmount = 0;
+  @SuppressWarnings("deprecation")
+  public void calculateGst(ActionRequest request, ActionResponse response) {
 
-    if (invoiceLineList != null) {
-      for (InvoiceLine invoiceLine : invoiceLineList) {
-        igst = igst + invoiceLine.getIgst().floatValue();
-        sgst = sgst + invoiceLine.getSgst().floatValue();
-        cgst = cgst + invoiceLine.getCgst().floatValue();
-        netAmount = netAmount + invoiceLine.getNetAmount().floatValue();
-        grossAmount = grossAmount + invoiceLine.getGrossAmount().floatValue();
-      }
-      response.setValue("netIgst", igst);
-      response.setValue("netCgst", cgst);
-      response.setValue("netSgst", sgst);
-      response.setValue("netAmount", netAmount);
-      response.setValue("grossAmount", grossAmount);
-    }
+    InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
+    Invoice invoice = request.getContext().getParentContext().asType(Invoice.class);
+    invoiceLine = gstInvoiceService.calculateInvocieLineGst(invoiceLine, invoice);
+    response.setValue("igst", invoiceLine.getIgst());
+    response.setValue("cgst", invoiceLine.getCgst());
+    response.setValue("sgst", invoiceLine.getSgst());
+    response.setValue("grossAmount", invoiceLine.getGrossAmount());
   }
 }
