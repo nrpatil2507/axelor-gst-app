@@ -13,7 +13,6 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
 
   @Override
   public Invoice setGstAmount(Invoice invoice) {
-
     float igst = 0, sgst = 0, cgst = 0, grossAmount = 0, netAmount = 0;
     List<InvoiceLine> invoiceLineList = invoice.getInvoiceItemsList();
 
@@ -96,25 +95,29 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
     Address address = invoice.getInvoiceAddress();
     Company company = invoice.getCompany();
     Address address2 = company.getAddress();
-    float gstAmount;
-    float invoiceCgst = 0;
-    float invoiceSgst = 0;
-    float grossAmount = 0;
+    BigDecimal gstAmount;
+    BigDecimal invoiceCgst;
+    BigDecimal invoiceSgst;
+    BigDecimal grossAmount;
 
     gstAmount =
-        (invoiceLine.getNetAmount().floatValue() * invoiceLine.getGstRate().floatValue()) / 100;
+        invoiceLine
+            .getNetAmount()
+            .multiply(invoiceLine.getGstRate())
+            .divide(BigDecimal.valueOf(100));
 
     if (address.getState() == address2.getState()) {
-      invoiceCgst = gstAmount / 2;
-      invoiceSgst = gstAmount / 2;
-      invoiceLine.setCgst(BigDecimal.valueOf(invoiceCgst));
-      invoiceLine.setSgst(BigDecimal.valueOf(invoiceSgst));
-      grossAmount = invoiceLine.getNetAmount().floatValue() + invoiceCgst + invoiceSgst;
+      invoiceCgst = gstAmount.divide(gstAmount, 2);
+      invoiceSgst = gstAmount.divide(gstAmount, 2);
+
+      invoiceLine.setCgst(invoiceCgst);
+      invoiceLine.setSgst(invoiceSgst);
+      grossAmount = invoiceLine.getNetAmount().add(invoiceCgst).add(invoiceSgst);
     } else {
-      invoiceLine.setIgst(BigDecimal.valueOf(gstAmount));
-      grossAmount = invoiceLine.getNetAmount().floatValue() + gstAmount;
+      invoiceLine.setIgst(gstAmount);
+      grossAmount = invoiceLine.getNetAmount().add(gstAmount);
     }
-    invoiceLine.setGrossAmount(BigDecimal.valueOf(grossAmount));
+    invoiceLine.setGrossAmount(grossAmount);
     return invoiceLine;
   }
 }

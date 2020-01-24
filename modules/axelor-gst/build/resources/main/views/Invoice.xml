@@ -27,7 +27,7 @@
   </grid>
 
   <form name="invoice-form" title="Invoice" model="com.axelor.gst.db.Invoice"
-    onNew="action-invoice-record-set-invoice-date" onLoad="action-invoice-method-set-reference">
+    onNew="action-invoice-record-set-invoice-date">
     <toolbar>
       <button name="printInvoiceBtn" title="Print" icon="fa-print"
         onClick="action-invoice-report-print-invoice" />
@@ -87,7 +87,7 @@
     <field name="invoiceDateT" />
     <field name="party.name" />
     <field name="grossAmount" />
-    <hilite color="info" if="status == 'draft'"/>
+    <hilite color="info" if="status=='draft'"/>
     <hilite color="warning" if="status=='paid'"/>
     <hilite color="success" if="status=='validated'"/>
     <hilite color="danger" if="status=='cancelled'"/>

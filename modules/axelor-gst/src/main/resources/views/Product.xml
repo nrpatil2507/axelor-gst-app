@@ -21,7 +21,7 @@
 
   <grid name="product-grid" title="Products" model="com.axelor.gst.db.Product">
     <toolbar>
-    <button name="createInvoiceBtn" title="Create invoice" icon="fa-print"/>
+    <button name="createInvoiceBtn" title="Create invoice" icon="fa-print" onClick="action.product.view.open.invoice.of.products"/>
     <button name="printBtn" title="Print" icon="fa-print" onClick="action-product-report-print-product-report"/>
     </toolbar>
     <field name="code" />
@@ -34,7 +34,7 @@
     <field name="gstRate" />
   </grid>
 
-  <cards name="product-cards" title="Products" model="com.axelor.gst.db.Product">
+  <cards name="product-cards" title="Products" model="com.axelor.gst.db.Product" width="350px">
     <field name="name" />
     <field name="code" />
     <field name="hsbn" />
@@ -47,10 +47,10 @@
         <strong>{{name}}</strong>
       </div>
       <div class="span8">
-          <span ng-if="name" title="Name">Name:</span> {{name}}<br>
-          <span ng-if="code" title="Code">Code:</span> {{code}}<br>
-          <span ng-if="category" title="Category">Category:</span> {{category.name}}<br>
-          <span ng-if="hsbn" title="Hsbn">HSBN:</span> {{hsbn}}<br>
+          <strong><span ng-if="name" title="Name">Name:</span></strong> {{name}}<br>
+          <strong><span ng-if="code" title="Code">Code:</span></strong> {{code}}<br>
+          <strong><span ng-if="category" title="Category">Category:</span></strong> {{category.name}}<br>
+          <strong><span ng-if="hsbn" title="Hsbn">HSBN:</span></strong> {{hsbn}}<br>
       </div>
     ]]></template>
   </cards>
@@ -61,4 +61,8 @@
 
   <action-report output="product-${date}" name="action-product-report-print-product-report" design="Product_Report.rptdesign"></action-report>
 
+<action-view name="action.product.view.open.invoice.of.products" title="Product Invoice" model="com.axelor.gst.db.Invoice">
+<view type="form" name="invoice-form"/>
+<domain>self.invoiceItemsList.product= id</domain>
+</action-view>
 </object-views>

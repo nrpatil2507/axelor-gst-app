@@ -34,7 +34,7 @@
     <field name="gstRate" />
   </grid>
 
-  <cards name="product-cards" title="Products" model="com.axelor.gst.db.Product">
+  <cards name="product-cards" title="Products" model="com.axelor.gst.db.Product" width="350px">
     <field name="name" />
     <field name="code" />
     <field name="hsbn" />
@@ -47,10 +47,10 @@
         <strong>{{name}}</strong>
       </div>
       <div class="span8">
-          <span ng-if="name" title="Name">Name:</span> {{name}}<br>
-          <span ng-if="code" title="Code">Code:</span> {{code}}<br>
-          <span ng-if="category" title="Category">Category:</span> {{category.name}}<br>
-          <span ng-if="hsbn" title="Hsbn">HSBN:</span> {{hsbn}}<br>
+          <strong><span ng-if="name" title="Name">Name:</span></strong> {{name}}<br>
+          <strong><span ng-if="code" title="Code">Code:</span></strong> {{code}}<br>
+          <strong><span ng-if="category" title="Category">Category:</span></strong> {{category.name}}<br>
+          <strong><span ng-if="hsbn" title="Hsbn">HSBN:</span></strong> {{hsbn}}<br>
       </div>
     ]]></template>
   </cards>

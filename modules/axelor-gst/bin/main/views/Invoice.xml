@@ -27,7 +27,7 @@
   </grid>
 
   <form name="invoice-form" title="Invoice" model="com.axelor.gst.db.Invoice"
-    onNew="action-invoice-record-set-invoice-date">
+    onNew="action-invoice-record-set-invoice-date" onSave="action-invoice-condition-check-for-null-values">
     <toolbar>
       <button name="printInvoiceBtn" title="Print" icon="fa-print"
         onClick="action-invoice-report-print-invoice" />
@@ -40,7 +40,7 @@
       <field name="reference" colSpan="4"/>
       <field name="invoiceDateT" colSpan="4" />
       <field name="priority" colSpan="4" />
-      <field name="company" colSpan="4" />
+      <field name="company" colSpan="4" onChange="action-invoice-method-set-total-amount" />
       <field name="party" colSpan="4"
         onChange="action-party-group-set-party-detail" />
       <field name="partyContact" colSpan="4" />
@@ -158,5 +158,12 @@
     <action name="action-invoice-method-set-invoice-address" />
     <action name="action-invoice-method-set-shipping-address" />
   </action-group>
+  
+  <action-condition name="action-invoice-condition-check-for-null-values">
+  <check field="invoiceDateT"/>
+  <check field="invoiceItemsList"/>
+  <check field="invoiceDateT" error="pls select date" if="!invoiceDateT"/>
+  <check field="invoiceItemsList" error="pls select any product" if="!invoiceItemsList"/>
+  </action-condition>
 
 </object-views>
