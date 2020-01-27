@@ -54,14 +54,16 @@
   <action name="action-invoice-product-record-set-net-amount"/>
   <action name="action-invoice-line-method-calculate-amounts"/>
   </action-group>
-  
+
   <action-condition name="action-invoice-line-condition-check-product-is-empty">
   <check field="product"/>
   <check field="gstRate"/>
   <check field="qty"/>
+  <check field="price"/>
   <check field="product" error="pls select any product" if="!product"/>
   <check field="gstRate" error="gst rate is not set" if="!gstRate"/>
   <check field="qty" error="pls select quantity" if="!qty"/>
+  <check field="price" error="pls enter valid price" if="price==1"/>
   </action-condition>
-  
+
 </object-views>

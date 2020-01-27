@@ -61,7 +61,7 @@
 
   <!-- Main menu Invoice -->
   <menuitem name="menu-invoice" parent="menu-gst-app" title="Invoice"
-    icon="fa fa-building-o" icon-background="olive" />
+    icon="fa fa-files-o" icon-background="olive" />
 
   <!-- Sub menu create invoice -->
   <menuitem name="menu-invoice-create-invoice" parent="menu-invoice"

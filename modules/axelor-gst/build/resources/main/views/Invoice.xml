@@ -27,7 +27,7 @@
   </grid>
 
   <form name="invoice-form" title="Invoice" model="com.axelor.gst.db.Invoice"
-    onNew="action-invoice-record-set-invoice-date">
+    onNew="action-invoice-record-set-invoice-date,action-invoice-method-set-selected-product-in-invoice" onSave="action-invoice-condition-check-for-null-values">
     <toolbar>
       <button name="printInvoiceBtn" title="Print" icon="fa-print"
         onClick="action-invoice-report-print-invoice" />
@@ -40,7 +40,7 @@
       <field name="reference" colSpan="4"/>
       <field name="invoiceDateT" colSpan="4" />
       <field name="priority" colSpan="4" />
-      <field name="company" colSpan="4" />
+      <field name="company" colSpan="4"/>
       <field name="party" colSpan="4"
         onChange="action-party-group-set-party-detail" />
       <field name="partyContact" colSpan="4" />
@@ -53,7 +53,7 @@
     </panel>
 
     <panel-related field="invoiceItemsList" target="com.axelor.gst.db.InvoiceLine"
-      name="invoiceItemsPanel" onChange="action-invoice-method-set-total-amount">
+      name="invoiceItemsPanel" onChange="action-invoice-method-set-total-amount" canNew="company!=null &amp;&amp; party!=null">
     </panel-related>
     <panel title="Product Amounts" name="productAmountsPanel">
       <field name="netAmount" />
@@ -148,6 +148,10 @@
     <call class="com.axelor.gst.db.web.GstSequenceController" method="setInvoiceSequence"/>
   </action-method>
 
+  <action-method name="action-invoice-method-set-selected-product-in-invoice">
+  <call class="com.axelor.gst.db.web.GstInvoiceController" method="getSeletedProducts"/>
+  </action-method>
+
   <action-report output="invoice-${date}${time}"
     name="action-invoice-report-print-invoice" design="Invoice_Report.rptdesign">
     <param name="invoiceId" expr="eval:id" />
@@ -158,5 +162,12 @@
     <action name="action-invoice-method-set-invoice-address" />
     <action name="action-invoice-method-set-shipping-address" />
   </action-group>
+
+  <action-condition name="action-invoice-condition-check-for-null-values">
+  <check field="invoiceDateT"/>
+  <check field="invoiceItemsList"/>
+  <check field="invoiceDateT" error="pls select date" if="!invoiceDateT"/>
+  <check field="invoiceItemsList" error="pls select any product" if="invoiceItemsList==null"/>
+  </action-condition>
 
 </object-views>

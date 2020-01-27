@@ -6,13 +6,15 @@
   <module name="gst" package="com.axelor.gst.db" />
 
   <entity name="Product">
-    <string name="name" required="true" title="Product Name"/>
-    <string name="code" required="true" title="product Code"/>
-    <string name="hsbn" title="HSBN"/>
-    <many-to-one name="category" ref="ProductCategory" title="Product Category"/>
-    <decimal name="salePrice" title="Product Sale Price"/>
+    <string name="name" required="true" title="Product Name" />
+    <string name="code" required="true" title="product Code" />
+    <string name="hsbn" title="HSBN" />
+    <many-to-one name="category" ref="ProductCategory" title="Product Category" />
+    <decimal name="salePrice" title="Product Sale Price" />
     <decimal name="costPrice" title="Product Cost Price" />
-    <binary name="image" image="true" title="Product Image"/>
-    <decimal name="gstRate" title="Gst Rate"/>
+    <one-to-one ref="com.axelor.meta.db.MetaFile" name="image"
+      title="Product Image" />
+    <decimal name="gstRate" title="Gst Rate" />
   </entity>
+
 </domain-models>

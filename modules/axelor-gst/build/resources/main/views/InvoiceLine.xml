@@ -9,9 +9,9 @@
     <panel title="Invoice Line Detail" name="invoiceLinePanel">
       <field name="product" onChange="action-record-set-product-fullname,action-record-invoce-line-set-product-gstrate"/>
       <field name="hsbn" />
-      <field name="item" />
+      <field name="item"/>
       <field name="qty" />
-      <field name="price" onChange="action-invoice-line-group-set-total-gst-amount"/>
+      <field name="price" onChange="action-invoice-line-condition-check-product-is-empty,action-invoice-line-group-set-total-gst-amount"/>
       <field name="netAmount"/>
       <field name="gstRate" />
       <field name="igst" />
@@ -21,7 +21,7 @@
     </panel>
   </form>
 
-  <grid model="com.axelor.gst.db.InvoiceLine" title="Invoicee Line" name="invoice-line-grid">
+  <grid model="com.axelor.gst.db.InvoiceLine" title="Invoice Line" name="invoice-line-grid">
        <field name="product" />
       <field name="hsbn" />
       <field name="item" />
@@ -43,7 +43,7 @@
   </action-record>
 
   <action-record name="action-invoice-product-record-set-net-amount" model="com.axelor.gst.db.InvoiceLine">
-  <field name="netAmount" expr="eval:qty * price"/>
+  <field name="netAmount" expr="eval:qty * price" />
   </action-record>
 
   <action-method name="action-invoice-line-method-calculate-amounts" model="com.axelor.gst.db.InvoiceLine">
@@ -54,5 +54,16 @@
   <action name="action-invoice-product-record-set-net-amount"/>
   <action name="action-invoice-line-method-calculate-amounts"/>
   </action-group>
+
+  <action-condition name="action-invoice-line-condition-check-product-is-empty">
+  <check field="product"/>
+  <check field="gstRate"/>
+  <check field="qty"/>
+  <check field="price"/>
+  <check field="product" error="pls select any product" if="!product"/>
+  <check field="gstRate" error="gst rate is not set" if="!gstRate"/>
+  <check field="qty" error="pls select quantity" if="!qty"/>
+  <check field="price" error="pls enter valid price" if="price==1"/>
+  </action-condition>
 
 </object-views>

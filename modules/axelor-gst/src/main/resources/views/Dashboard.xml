@@ -67,7 +67,7 @@
     <category key="customer" type="text" />
     <series key="invoice" groupBy="customer" type="bar" />
   </chart>
-  
+
    <chart name="chart.paid.invoice.per.product.per.category" title="Paid Invoices Per Product Per Category"
     onInit="action-chart-attrs-on-init-set-dates" width="350" stacked="true">
     <search-fields>
@@ -78,21 +78,21 @@
       <![CDATA[
        select count(*) as invoicecount
        ,product.name as product
-       ,category.name as category 
+       ,category.name as category
        from gst_invoice as invoice
-       left join gst_invoice_line as invoiceLine on invoiceLine.invoice=invoice.id 
+       left join gst_invoice_line as invoiceLine on invoiceLine.invoice=invoice.id
        left join gst_product as product on product.id=invoiceLine.product
-       left join gst_product_category as category on category.id=product.category 
+       left join gst_product_category as category on category.id=product.category
        where invoice.status='paid'
        and (DATE(invoice.invoice_datet) >= DATE(:fromDate) and DATE(invoice.invoice_datet) <= DATE(:toDate))
        group by product.name,category.name
-      
+
       ]]>
       </dataset>
     <category key="category" type="text" />
     <series key="invoicecount" groupBy="product" type="bar" aggregate="count"/>
   </chart>
-  
+
 
   <chart name="chart.customer.per.state" title="Customer per State">
     <dataset type="sql">

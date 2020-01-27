@@ -28,8 +28,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -38,10 +38,11 @@ import org.hibernate.annotations.Type;
 
 import com.axelor.auth.db.AuditableModel;
 import com.axelor.db.annotations.Widget;
+import com.axelor.meta.db.MetaFile;
 import com.google.common.base.MoreObjects;
 
 @Entity
-@Table(name = "GST_PRODUCT", indexes = { @Index(columnList = "name"), @Index(columnList = "code"), @Index(columnList = "category") })
+@Table(name = "GST_PRODUCT", indexes = { @Index(columnList = "name"), @Index(columnList = "code"), @Index(columnList = "category"), @Index(columnList = "image") })
 public class Product extends AuditableModel {
 
 	@Id
@@ -70,10 +71,9 @@ public class Product extends AuditableModel {
 	@Widget(title = "Product Cost Price")
 	private BigDecimal costPrice = BigDecimal.ZERO;
 
-	@Widget(image = true, title = "Product Image")
-	@Lob
-	@Basic(fetch = FetchType.LAZY)
-	private byte[] image;
+	@Widget(title = "Product Image")
+	@OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private MetaFile image;
 
 	@Widget(title = "Gst Rate")
 	private BigDecimal gstRate = BigDecimal.ZERO;
@@ -149,11 +149,11 @@ public class Product extends AuditableModel {
 		this.costPrice = costPrice;
 	}
 
-	public byte[] getImage() {
+	public MetaFile getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(MetaFile image) {
 		this.image = image;
 	}
 
