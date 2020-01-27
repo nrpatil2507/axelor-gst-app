@@ -22,7 +22,7 @@
   <grid name="product-grid" title="Products" model="com.axelor.gst.db.Product">
     <toolbar>
       <button name="createInvoiceBtn" title="Create invoice" icon="fa-print"
-        onClick="action-product-method-get-selected-product-to-set-invoice"/>
+        onClick="action-product-method-get-selected-product-to-set-invoice" />
       <button name="printBtn" title="Print" icon="fa-print"
         onClick="action-product-method-get-selected-product-ids,action-product-report-print-product-report" />
     </toolbar>
@@ -67,12 +67,14 @@
     <call class="com.axelor.gst.db.web.GstProductController" method="getSelectedProductIds" />
   </action-method>
 
-  <action-method name="action-product-method-get-selected-product-to-set-invoice">
+  <action-method
+    name="action-product-method-get-selected-product-to-set-invoice">
     <call class="com.axelor.gst.db.web.GstProductController" method="generateNewInvoice" />
   </action-method>
 
   <action-report output="product-${date}"
-    name="action-product-report-print-product-report" design="Product_Report.rptdesign" attachment="true">
-    <param name="ids" expr="eval:ids"/>
+    name="action-product-report-print-product-report" design="Product_Report.rptdesign"
+    attachment="true">
+    <param name="ids" expr="eval:ids" />
   </action-report>
 </object-views>

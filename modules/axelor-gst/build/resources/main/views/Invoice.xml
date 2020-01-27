@@ -27,7 +27,8 @@
   </grid>
 
   <form name="invoice-form" title="Invoice" model="com.axelor.gst.db.Invoice"
-    onNew="action-invoice-record-set-invoice-date,action-invoice-method-set-selected-product-in-invoice" onSave="action-invoice-condition-check-for-null-values">
+    onNew="action-invoice-record-set-invoice-date,action-invoice-method-set-selected-product-in-invoice"
+    onSave="action-invoice-condition-check-for-null-values">
     <toolbar>
       <button name="printInvoiceBtn" title="Print" icon="fa-print"
         onClick="action-invoice-report-print-invoice" />
@@ -37,10 +38,10 @@
         colSpan="12" />
     </panel>
     <panel title="Invoice Detail" name="invoiceDetailPanel">
-      <field name="reference" colSpan="4"/>
+      <field name="reference" colSpan="4" />
       <field name="invoiceDateT" colSpan="4" />
       <field name="priority" colSpan="4" />
-      <field name="company" colSpan="4"/>
+      <field name="company" colSpan="4" />
       <field name="party" colSpan="4"
         onChange="action-party-group-set-party-detail" />
       <field name="partyContact" colSpan="4" />
@@ -53,7 +54,8 @@
     </panel>
 
     <panel-related field="invoiceItemsList" target="com.axelor.gst.db.InvoiceLine"
-      name="invoiceItemsPanel" onChange="action-invoice-method-set-total-amount" canNew="company!=null &amp;&amp; party!=null">
+      name="invoiceItemsPanel" onChange="action-invoice-method-set-total-amount"
+      canNew="company!=null &amp;&amp; party!=null">
     </panel-related>
     <panel title="Product Amounts" name="productAmountsPanel">
       <field name="netAmount" />
@@ -68,8 +70,8 @@
         showIf="status == 'cancelled' || status == 'validated'" />
 
       <button name="validateBtn" title="Validated" css="btn-success"
-        onClick="action-invoice-status-attrs-change-on-validated,action-invoice-method-set-reference" hidden="true"
-        showIf="status == 'draft' || status=='paid'" />
+        onClick="action-invoice-status-attrs-change-on-validated,action-invoice-method-set-reference"
+        hidden="true" showIf="status == 'draft' || status=='paid'" />
 
       <button name="paidBtn" title="Paid" css="btn-warning"
         onClick="action-invoice-status-attrs-change-on-paid" hidden="true"
@@ -82,15 +84,15 @@
 
   <kanban name="invoice-kanban" title="Invoice Detail" model="com.axelor.gst.db.Invoice"
     columnBy="status" sequenceBy="priority" limit="10" draggable="true">
-    <field name="reference"/>
+    <field name="reference" />
     <field name="invoiceItemsList.item" />
     <field name="invoiceDateT" />
     <field name="party.name" />
     <field name="grossAmount" />
-    <hilite color="info" if="status=='draft'"/>
-    <hilite color="warning" if="status=='paid'"/>
-    <hilite color="success" if="status=='validated'"/>
-    <hilite color="danger" if="status=='cancelled'"/>
+    <hilite color="info" if="status=='draft'" />
+    <hilite color="warning" if="status=='paid'" />
+    <hilite color="success" if="status=='validated'" />
+    <hilite color="danger" if="status=='cancelled'" />
 
     <template><![CDATA[
         <h4>{{reference}}</h4>
@@ -144,12 +146,12 @@
     <call class="com.axelor.gst.db.web.GstInvoiceController" method="setTotalAmount" />
   </action-method>
 
-   <action-method name="action-invoice-method-set-reference">
-    <call class="com.axelor.gst.db.web.GstSequenceController" method="setInvoiceSequence"/>
+  <action-method name="action-invoice-method-set-reference">
+    <call class="com.axelor.gst.db.web.GstSequenceController" method="setInvoiceSequence" />
   </action-method>
 
   <action-method name="action-invoice-method-set-selected-product-in-invoice">
-  <call class="com.axelor.gst.db.web.GstInvoiceController" method="getSeletedProducts"/>
+    <call class="com.axelor.gst.db.web.GstInvoiceController" method="getSeletedProducts" />
   </action-method>
 
   <action-report output="invoice-${date}${time}"
@@ -164,10 +166,11 @@
   </action-group>
 
   <action-condition name="action-invoice-condition-check-for-null-values">
-  <check field="invoiceDateT"/>
-  <check field="invoiceItemsList"/>
-  <check field="invoiceDateT" error="pls select date" if="!invoiceDateT"/>
-  <check field="invoiceItemsList" error="pls select any product" if="invoiceItemsList==null"/>
+    <check field="invoiceDateT" />
+    <check field="invoiceItemsList" />
+    <check field="invoiceDateT" error="pls select date" if="!invoiceDateT" />
+    <check field="invoiceItemsList" error="pls select any product"
+      if="invoiceItemsList==null" />
   </action-condition>
 
 </object-views>
