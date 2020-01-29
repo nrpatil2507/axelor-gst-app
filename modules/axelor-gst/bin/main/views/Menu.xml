@@ -9,7 +9,7 @@
 
   <!-- Main menu dashboard -->
   <menuitem name="menu-dashboard" parent="menu-gst-app" title="Dashboard"
-    icon="fa fa-dashboard" action="dashboard.all" />
+    icon="fa fa-dashboard" action="dashboard.all" icon-background="blue" />
 
   <action-view name="dashboard.all" title="Dashboard">
     <view type="dashboard" name="gst-dashboard" />
@@ -89,7 +89,7 @@
 
   <!-- Main menu Company -->
   <menuitem name="menu-company" parent="menu-gst-app" title="Company"
-    icon="fa fa-industry" icon-background="blue" />
+    icon="fa fa-industry" icon-background="teal" />
 
   <!-- Sub menu Company -->
   <menuitem name="menu-company-company" parent="menu-company"

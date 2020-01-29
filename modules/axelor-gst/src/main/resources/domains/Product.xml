@@ -7,7 +7,7 @@
 
   <entity name="Product">
     <string name="name" required="true" title="Product Name" />
-    <string name="code" required="true" title="product Code" />
+    <string name="code" required="true" title="Product Code" />
     <string name="hsbn" title="HSBN" />
     <many-to-one name="category" ref="ProductCategory" title="Product Category" />
     <decimal name="salePrice" title="Product Sale Price" />

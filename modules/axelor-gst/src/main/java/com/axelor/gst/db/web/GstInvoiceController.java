@@ -16,23 +16,12 @@ public class GstInvoiceController {
   @Inject private GstInvoiceService gstInvoiceService;
   @Inject ProductRepository productRepo;
 
-  public void setPrimaryContact(ActionRequest request, ActionResponse response) {
-
+  public void setPartyDetail(ActionRequest request, ActionResponse response) {
     Invoice invoice = request.getContext().asType(Invoice.class);
-    invoice = gstInvoiceService.setPartyContact(invoice);
-    response.setValue("partyContact", invoice.getPartyContact());
-  }
-
-  public void setInvoiceAddress(ActionRequest request, ActionResponse response) {
-    Invoice invoice = request.getContext().asType(Invoice.class);
-    invoice = gstInvoiceService.setInvoiceAdd(invoice);
-    response.setValue("invoiceAddress", invoice.getInvoiceAddress());
-  }
-
-  public void setShippingAddress(ActionRequest request, ActionResponse response) {
-    Invoice invoice = request.getContext().asType(Invoice.class);
-    invoice = gstInvoiceService.setShiipingAdd(invoice);
+    invoice = gstInvoiceService.setPartyDetail(invoice);
     response.setValue("shippingAddress", invoice.getShippingAddress());
+    response.setValue("invoiceAddress", invoice.getInvoiceAddress());
+    response.setValue("partyContact", invoice.getPartyContact());
   }
 
   public void setTotalAmount(ActionRequest request, ActionResponse response) {
@@ -45,22 +34,34 @@ public class GstInvoiceController {
     response.setValue("grossAmount", invoice.getGrossAmount());
   }
 
-  @SuppressWarnings("deprecation")
   public void calculateGst(ActionRequest request, ActionResponse response) {
 
     InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
-    Invoice invoice = request.getContext().getParentContext().asType(Invoice.class);
-    invoiceLine = gstInvoiceService.calculateInvocieLineGst(invoiceLine, invoice);
+    Invoice invoice = request.getContext().getParent().asType(Invoice.class);
+    invoiceLine = gstInvoiceService.calculateInvoiceLineGst(invoiceLine, invoice);
     response.setValue("igst", invoiceLine.getIgst());
     response.setValue("cgst", invoiceLine.getCgst());
     response.setValue("sgst", invoiceLine.getSgst());
     response.setValue("grossAmount", invoiceLine.getGrossAmount());
   }
 
+  public void setInvoiceLineOnChangeParty(ActionRequest request, ActionResponse response) {
+    Invoice invoice = request.getContext().asType(Invoice.class);
+    List<InvoiceLine> invoiceLineList = new ArrayList<>();
+    invoiceLineList = gstInvoiceService.setInvoiceDetailOnChange(invoice);
+    invoice = gstInvoiceService.setGstAmount(invoice);
+    response.setValue("netIgst", invoice.getNetIgst());
+    response.setValue("netCgst", invoice.getNetCgst());
+    response.setValue("netSgst", invoice.getNetSgst());
+    response.setValue("netAmount", invoice.getNetAmount());
+    response.setValue("grossAmount", invoice.getGrossAmount());
+    response.setValue("invoiceItemsList", invoiceLineList);
+  }
+
   @SuppressWarnings("unchecked")
   public void getSeletedProducts(ActionRequest request, ActionResponse response) {
     List<Integer> productIdList = new ArrayList<>();
-    productIdList = (List<Integer>) request.getContext().get("productList");
+    productIdList = (List<Integer>) request.getContext().get("productIds");
     if (productIdList != null) {
       try {
         List<InvoiceLine> invoiceLineList = new ArrayList<>();

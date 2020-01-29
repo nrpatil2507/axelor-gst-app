@@ -153,6 +153,18 @@
                     <text-property name="heading">line1</text-property>
                 </structure>
                 <structure>
+                    <property name="columnName">line2</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">line2</text-property>
+                    <text-property name="heading">line2</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">pin_code</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">pin_code</text-property>
+                    <text-property name="heading">pin_code</text-property>
+                </structure>
+                <structure>
                     <property name="columnName">city</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">city</text-property>
@@ -260,6 +272,16 @@
                     </structure>
                     <structure>
                         <property name="position">18</property>
+                        <property name="name">line2</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">pin_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
                         <property name="name">city</property>
                         <property name="dataType">string</property>
                     </structure>
@@ -388,6 +410,20 @@
                 </structure>
                 <structure>
                     <property name="position">18</property>
+                    <property name="name">line2</property>
+                    <property name="nativeName">line2</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">pin_code</property>
+                    <property name="nativeName">pin_code</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
                     <property name="name">city</property>
                     <property name="nativeName">city</property>
                     <property name="dataType">string</property>
@@ -409,7 +445,7 @@ l.gross_amount,
 l.item,l.qty,
 i.net_amount as totalNetAmount,
 i.gross_amount as totalgrossAmount,
-a.line1,c.name as city
+a.line1,a.line2,a.pin_Code,c.name as city
 from gst_invoice as i 
 left join gst_party as p on p.id=i.party
 left join gst_invoice_line as l on l.invoice=i.id
@@ -954,7 +990,7 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                     <property name="borderRightStyle">none</property>
                     <property name="borderTopStyle">none</property>
                     <grid id="39">
-                        <property name="height">0.9895833333333334in</property>
+                        <property name="height">1.4166666666666667in</property>
                         <column id="40"/>
                         <column id="41"/>
                         <row id="42">
@@ -982,7 +1018,7 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="45">
-                            <property name="height">0.6458333333333334in</property>
+                            <property name="height">1.0729166666666667in</property>
                             <cell id="46">
                                 <label id="50">
                                     <property name="fontSize">12pt</property>
@@ -1002,6 +1038,30 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                                         </structure>
                                     </list-property>
                                     <property name="resultSetColumn">line1</property>
+                                </data>
+                                <data id="156">
+                                    <property name="dataSet">Invoice_data</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">line2</property>
+                                            <text-property name="displayName">line2</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["line2"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">line2</property>
+                                </data>
+                                <data id="157">
+                                    <property name="dataSet">Invoice_data</property>
+                                    <list-property name="boundDataColumns">
+                                        <structure>
+                                            <property name="name">pin_code</property>
+                                            <text-property name="displayName">pin_code</text-property>
+                                            <expression name="expression" type="javascript">dataSetRow["pin_code"]</expression>
+                                            <property name="dataType">string</property>
+                                        </structure>
+                                    </list-property>
+                                    <property name="resultSetColumn">pin_code</property>
                                 </data>
                                 <data id="52">
                                     <property name="dataSet">Invoice_data</property>

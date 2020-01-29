@@ -39,10 +39,10 @@ public class GstSequenceController {
         String partySequence = sequence.getPrefix() + nextnumber + sequence.getSufix();
         party.setReference(partySequence);
         sequenceRepo.persist(sequence);
+        response.setValues(party);
+      } else {
+        response.setFlash("sequence for party model was not generated");
       }
-      response.setValues(party);
-    } else {
-      response.setFlash("sequence for invoice model was not generated");
     }
   }
 
@@ -52,9 +52,11 @@ public class GstSequenceController {
     Sequence sequence = new Sequence();
     String partySequence;
     if (invoice.getReference() == null) {
-      MetaModel m = Beans.get(MetaModelRepository.class).findByName("Invoice");
-
-      sequence = Beans.get(SequenceRepository.class).all().filter("self.model = ?", m).fetchOne();
+      sequence =
+          Beans.get(SequenceRepository.class)
+              .all()
+              .filter("self.model.name = ?", "Invoice")
+              .fetchOne();
       if (sequence != null) {
         int n = Integer.parseInt(sequence.getNextNumber());
 

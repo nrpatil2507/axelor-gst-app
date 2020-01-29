@@ -20,12 +20,14 @@ package com.axelor.gst.db;
 import java.util.Objects;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -37,7 +39,7 @@ import com.axelor.db.annotations.Widget;
 import com.google.common.base.MoreObjects;
 
 @Entity
-@Table(name = "GST_CITY", indexes = { @Index(columnList = "name") })
+@Table(name = "GST_CITY", indexes = { @Index(columnList = "name"), @Index(columnList = "state"), @Index(columnList = "country") })
 public class City extends AuditableModel {
 
 	@Id
@@ -50,11 +52,13 @@ public class City extends AuditableModel {
 	private String name;
 
 	@Widget(title = "State")
-	private String state;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private State state;
 
 	@Widget(title = "Country")
 	@NotNull
-	private String country;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private Country country;
 
 	@Widget(title = "Attributes")
 	@Basic(fetch = FetchType.LAZY)
@@ -86,19 +90,19 @@ public class City extends AuditableModel {
 		this.name = name;
 	}
 
-	public String getState() {
+	public State getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(State state) {
 		this.state = state;
 	}
 
-	public String getCountry() {
+	public Country getCountry() {
 		return country;
 	}
 
-	public void setCountry(String country) {
+	public void setCountry(Country country) {
 		this.country = country;
 	}
 
@@ -134,8 +138,6 @@ public class City extends AuditableModel {
 		return MoreObjects.toStringHelper(this)
 			.add("id", getId())
 			.add("name", getName())
-			.add("state", getState())
-			.add("country", getCountry())
 			.omitNullValues()
 			.toString();
 	}

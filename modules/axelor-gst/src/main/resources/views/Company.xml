@@ -10,7 +10,7 @@
     <field name="address" />
   </grid>
 
-  <form name="company-form" title="Company" model="com.axelor.gst.db.Company">
+  <form name="company-form" title="Company" model="com.axelor.gst.db.Company" width="large">
     <panel title="Company Detail" name="companyDetailPanel">
       <field name="logo" widget="image" showTitle="false" colSpan="4" />
       <field name="name" colSpan="4" />
@@ -24,6 +24,8 @@
           <field name="type" colSpan="6" />
           <field name="primaryPhone" colSpan="6" />
           <field name="primaryEmail" colSpan="6" />
+          <field name="secondaryPhone" colSpan="6"/>
+          <field name="secondaryEmail" colSpan="6"/>
         </editor>
       </field>
     </panel>

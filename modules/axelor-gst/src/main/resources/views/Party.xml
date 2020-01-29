@@ -9,7 +9,7 @@
   </selection>
 
   <form name="party-form" title="Party" model="com.axelor.gst.db.Party"
-    onSave="com.axelor.gst.db.web.GstSequenceController:setPartySequence">
+    onSave="com.axelor.gst.db.web.GstSequenceController:setPartySequence" width="large">
     <panel title="Party Detail" colSpan="8" name="partyDetailPanel">
       <field name="reference" colSpan="4" />
       <field name="name" colSpan="4" />
@@ -34,9 +34,11 @@
       <field name="addressList" showTitle="false" colSpan="12">
         <editor>
           <field name="line1" />
+          <field name="line2"></field>
           <field name="type" />
-          <field name="city" />
+          <field name="city"/>
           <field name="country" />
+          <field name="state" required="true"/>
         </editor>
       </field>
     </panel>
@@ -89,5 +91,4 @@
   </div>
     ]]></template>
   </cards>
-
 </object-views>

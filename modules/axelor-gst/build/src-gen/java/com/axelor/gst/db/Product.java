@@ -54,7 +54,7 @@ public class Product extends AuditableModel {
 	@NotNull
 	private String name;
 
-	@Widget(title = "product Code")
+	@Widget(title = "Product Code")
 	@NotNull
 	private String code;
 

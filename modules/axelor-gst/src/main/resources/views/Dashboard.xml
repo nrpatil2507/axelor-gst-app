@@ -4,13 +4,14 @@
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
 
   <dashboard title="Dashboard" name="gst-dashboard">
-     <dashlet action="chart:chart.paid.invoice.per.product.per.category" height="350" colSpan="12"/>
+    <dashlet action="chart:chart.paid.invoice.per.product.per.category"
+      height="350" colSpan="12" />
     <dashlet action="chart:chart.unpaid.invoice.per.customer" />
     <dashlet action="chart:chart.customer.per.state" />
-    <dashlet action="chart:chart.invoice.per.status"/>
+    <dashlet action="chart:chart.invoice.per.status" />
     <dashlet action="chart:chart.invoice.per.status.number.of.invoice" />
-    <dashlet action="dashlet.unpaid.older.invoices" height="350" width="350"
-      colSpan="12" />
+    <dashlet action="dashlet.unpaid.older.invoices" height="350"
+      width="350" colSpan="12" />
   </dashboard>
 
   <chart name="chart.invoice.per.status" title="Invoice per status by amount">
@@ -33,7 +34,7 @@
     <dataset type="jpql">
       <![CDATA[
        SELECT
-        count(*) as invoiceCount,
+        count(id) as invoiceCount,
          status as status
       FROM
         Invoice
@@ -42,7 +43,7 @@
       ORDER BY invoiceCount
       ]]>
       </dataset>
-    <category key="status" type="text" title="status" />
+    <category key="invoiceCount" type="text" title="status" />
     <series key="invoiceCount" groupBy="status" type="line" />
   </chart>
 
@@ -68,7 +69,7 @@
     <series key="invoice" groupBy="customer" type="bar" />
   </chart>
 
-   <chart name="chart.paid.invoice.per.product.per.category" title="Paid Invoices Per Product Per Category"
+  <chart name="chart.paid.invoice.per.product.per.category" title="Paid Invoices Per Product Per Category"
     onInit="action-chart-attrs-on-init-set-dates" width="350" stacked="true">
     <search-fields>
       <field type="date" name="fromDate" title="From Date" />
@@ -90,7 +91,8 @@
       ]]>
       </dataset>
     <category key="category" type="text" />
-    <series key="invoicecount" groupBy="product" type="bar" aggregate="count"/>
+    <series key="invoicecount" groupBy="product" type="bar"
+      aggregate="count" />
   </chart>
 
 
@@ -116,14 +118,14 @@
 
   <action-view name="dashlet.unpaid.older.invoices" title="Invoices Older Than Month"
     model="com.axelor.gst.db.Invoice">
-    <view type="grid" name="invoice-grid"/>
+    <view type="grid" name="invoice-grid" />
     <domain>self.invoiceDateT &lt;= date(now())-30 and (self.status='validated' or self.status='draft')</domain>
   </action-view>
 
   <action-attrs name="action-chart-attrs-on-init-set-dates">
     <attribute name="value" for="toDate" expr="eval:__date__" />
     <attribute name="value" for="fromDate"
-      expr="eval:__date__.withDayOfMonth(1)"/>
+      expr="eval:__date__.withDayOfMonth(1)" />
   </action-attrs>
 
 </object-views>

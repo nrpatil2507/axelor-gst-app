@@ -3,7 +3,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
 
-  <form name="country-form" title="Country" model="com.axelor.gst.db.Country">
+  <form name="country-form" title="Country" model="com.axelor.gst.db.Country" width="large">
     <panel title="Country Detail" name="countryDetailPanel">
       <field name="name" />
     </panel>
