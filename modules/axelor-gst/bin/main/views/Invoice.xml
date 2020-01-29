@@ -49,7 +49,7 @@
     <panel title="Address" name="addressPanel">
       <field name="invoiceAddress" readonlyIf="status !='draft'"
         onChange="action-invoice-group-call-on-change" onSelect="action-invoice-attrs-on-change-party-set-contact-address" />
-      <field name="isInvoiceAddAsShipping" 
+      <field name="isInvoiceAddAsShipping"
         onChange="action-invoice-method-set-party-detail" readonlyIf="status !='draft'" />
       <field name="shippingAddress" hideIf="isInvoiceAddAsShipping" readonlyIf="status !='draft'"/>
     </panel>

@@ -19,7 +19,6 @@
       <field name="igst" />
       <field name="sgst" />
       <field name="cgst" />
-
       <field name="grossAmount" />
     </panel>
   </form>
@@ -29,14 +28,15 @@
     <field name="product" />
     <field name="hsbn" />
     <field name="item" />
+    <field name="gstRate" />
     <field name="qty" />
     <field name="price" />
     <field name="netAmount" />
-    <field name="gstRate" />
     <field name="igst" />
     <field name="sgst" />
     <field name="cgst" />
     <field name="grossAmount" />
+
   </grid>
 
 
@@ -72,7 +72,7 @@
 
   <action-group name="action-invoice-line-group-on-change-product">
     <action name="action-record-invoice-line-set-product-detail" />
-    <action name="action-invoice-line-group-set-data-on-change-price-qty"/>
+    <action name="action-invoice-line-group-set-data-on-change-price-qty" />
   </action-group>
 
   <action-group name="action-invoice-line-group-set-data-on-change-price-qty">

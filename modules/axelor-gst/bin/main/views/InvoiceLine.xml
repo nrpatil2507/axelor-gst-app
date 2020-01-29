@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <object-views xmlns="http://axelor.com/xml/ns/object-views"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.2.xsd">
 
-	<form name="invoice-line-form" title="Invoice line"
-		model="com.axelor.gst.db.InvoiceLine" onSave="action-invoice-line-condition-check-product-is-empty">
+  <form name="invoice-line-form" title="Invoice line"
+    model="com.axelor.gst.db.InvoiceLine" onSave="action-invoice-line-condition-check-product-is-empty">
 
-		<panel title="Invoice Line Detail" name="invoiceLinePanel">
-			<field name="product" onChange="action-invoice-line-group-on-change-product" />
-			<field name="hsbn" />
-			<field name="item" />
-			<field name="qty"
-				onChange="action-invoice-line-group-set-data-on-change-price-qty" />
-			<field name="price"
-				onChange="action-invoice-line-group-set-data-on-change-price-qty" />
-			<field name="netAmount" />
-			<field name="gstRate" />
-			<field name="igst" />
-			<field name="sgst" />
-			<field name="cgst" />
-			<field name="grossAmount" />
-		</panel>
-	</form>
+    <panel title="Invoice Line Detail" name="invoiceLinePanel">
+      <field name="product" onChange="action-invoice-line-group-on-change-product" />
+      <field name="hsbn" />
+      <field name="item" />
+      <field name="qty"
+        onChange="action-invoice-line-group-set-data-on-change-price-qty" />
+      <field name="price"
+        onChange="action-invoice-line-group-set-data-on-change-price-qty" />
+      <field name="netAmount" />
+      <field name="gstRate" />
+      <field name="igst" />
+      <field name="sgst" />
+      <field name="cgst" />
+      <field name="grossAmount" />
+    </panel>
+  </form>
 
-	<grid model="com.axelor.gst.db.InvoiceLine" title="Invoice Line"
-		name="invoice-line-grid">
-		<field name="product" />
-		<field name="hsbn" />
-		<field name="item" />
-		<field name="gstRate" />
-		<field name="qty" />
-		<field name="price" />
-		<field name="netAmount" />
-		<field name="igst" />
-		<field name="sgst" />
-		<field name="cgst" />
-		<field name="grossAmount" />
+  <grid model="com.axelor.gst.db.InvoiceLine" title="Invoice Line"
+    name="invoice-line-grid">
+    <field name="product" />
+    <field name="hsbn" />
+    <field name="item" />
+    <field name="gstRate" />
+    <field name="qty" />
+    <field name="price" />
+    <field name="netAmount" />
+    <field name="igst" />
+    <field name="sgst" />
+    <field name="cgst" />
+    <field name="grossAmount" />
 
-	</grid>
+  </grid>
 
 
-	<action-record name="action-record-invoice-line-set-product-detail"
-		model="com.axelor.gst.db.InvoiceLine">
-		<field name="gstRate" expr="eval:product.gstRate" />
-		<field name="item" expr="eval:'['+ product.code +'] '+ product.name" />
-		<field name="hsbn" expr="eval:product.hsbn" />
-		<field name="price" expr="eval:product.salePrice" />
-	</action-record>
+  <action-record name="action-record-invoice-line-set-product-detail"
+    model="com.axelor.gst.db.InvoiceLine">
+    <field name="gstRate" expr="eval:product.gstRate" />
+    <field name="item" expr="eval:'['+ product.code +'] '+ product.name" />
+    <field name="hsbn" expr="eval:product.hsbn" />
+    <field name="price" expr="eval:product.salePrice" />
+  </action-record>
 
-	<action-record name="action-invoice-product-record-set-net-amount"
-		model="com.axelor.gst.db.InvoiceLine">
-		<field name="netAmount" expr="eval:qty * price" />
-	</action-record>
+  <action-record name="action-invoice-product-record-set-net-amount"
+    model="com.axelor.gst.db.InvoiceLine">
+    <field name="netAmount" expr="eval:qty * price" />
+  </action-record>
 
-	<action-method name="action-invoice-line-method-calculate-amounts"
-		model="com.axelor.gst.db.InvoiceLine">
-		<call class="com.axelor.gst.db.web.GstInvoiceController" method="calculateGst" />
-	</action-method>
+  <action-method name="action-invoice-line-method-calculate-amounts"
+    model="com.axelor.gst.db.InvoiceLine">
+    <call class="com.axelor.gst.db.web.GstInvoiceController" method="calculateGst" />
+  </action-method>
 
-	<action-condition
-		name="action-invoice-line-condition-check-product-is-empty">
-		<check field="product" />
-		<check field="gstRate" />
-		<check field="qty" />
-		<check field="price" />
-		<check field="product" error="pls select any product" if="!product" />
-		<check field="gstRate" error="gst rate is not set" if="!gstRate" />
-		<check field="qty" error="pls select quantity" if="!qty" />
-		<check field="price" error="pls enter valid price" if="price &lt;=0" />
-	</action-condition>
+  <action-condition
+    name="action-invoice-line-condition-check-product-is-empty">
+    <check field="product" />
+    <check field="gstRate" />
+    <check field="qty" />
+    <check field="price" />
+    <check field="product" error="pls select any product" if="!product" />
+    <check field="gstRate" error="gst rate is not set" if="!gstRate" />
+    <check field="qty" error="pls select quantity" if="!qty" />
+    <check field="price" error="pls enter valid price" if="price &lt;=0" />
+  </action-condition>
 
-	<action-group name="action-invoice-line-group-on-change-product">
-		<action name="action-record-invoice-line-set-product-detail" />
-		<action name="action-invoice-line-group-set-data-on-change-price-qty" />
-	</action-group>
+  <action-group name="action-invoice-line-group-on-change-product">
+    <action name="action-record-invoice-line-set-product-detail" />
+    <action name="action-invoice-line-group-set-data-on-change-price-qty" />
+  </action-group>
 
-	<action-group name="action-invoice-line-group-set-data-on-change-price-qty">
-		<action name="action-invoice-product-record-set-net-amount" />
-		<action name="action-invoice-line-method-calculate-amounts" />
-		<action name="action-invoice-line-condition-check-product-is-empty" />
-	</action-group>
+  <action-group name="action-invoice-line-group-set-data-on-change-price-qty">
+    <action name="action-invoice-product-record-set-net-amount" />
+    <action name="action-invoice-line-method-calculate-amounts" />
+    <action name="action-invoice-line-condition-check-product-is-empty" />
+  </action-group>
 
 </object-views>

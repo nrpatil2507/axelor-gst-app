@@ -38,25 +38,25 @@
     </panel>
     <panel title="Invoice Detail" name="invoiceDetailPanel">
       <field name="reference" colSpan="4" showIf="reference" />
-      <field name="invoiceDateT" colSpan="4" />
+      <field name="invoiceDateT" colSpan="4" readonlyIf="status !='draft'"/>
       <field name="priority" colSpan="4" />
       <field name="company" colSpan="4"
-        onChange="action-invoice-group-call-on-change" />
+        onChange="action-invoice-group-call-on-change" readonlyIf="status !='draft'" />
       <field name="party" colSpan="4"
-        onChange="action-invoice-group-set-party-data" />
-      <field name="partyContact" colSpan="4" onSelect="action-invoice-attrs-on-change-party-set-contact-address"/>
+        onChange="action-invoice-group-set-party-data" readonlyIf="status !='draft'"/>
+      <field name="partyContact" colSpan="4" onSelect="action-invoice-attrs-on-change-party-set-contact-address" readonlyIf="status !='draft'"/>
     </panel>
     <panel title="Address" name="addressPanel">
-      <field name="invoiceAddress" colSpan="4"
+      <field name="invoiceAddress" readonlyIf="status !='draft'"
         onChange="action-invoice-group-call-on-change" onSelect="action-invoice-attrs-on-change-party-set-contact-address" />
-      <field name="isInvoiceAddAsShipping" colSpan="4"
-        onChange="action-invoice-method-set-party-detail" />
-      <field name="shippingAddress" colSpan="4" hideIf="isInvoiceAddAsShipping" />
+      <field name="isInvoiceAddAsShipping"
+        onChange="action-invoice-method-set-party-detail" readonlyIf="status !='draft'" />
+      <field name="shippingAddress" hideIf="isInvoiceAddAsShipping" readonlyIf="status !='draft'"/>
     </panel>
 
     <panel-related field="invoiceItemsList" target="com.axelor.gst.db.InvoiceLine"
       name="invoiceItemsPanel" onChange="action-invoice-method-set-total-amount"
-      readonlyIf="company==null || party==null">
+      readonlyIf="(company==null || party==null) || status=='paid' || status=='cancelled'">
     </panel-related>
     <panel title="Product Amounts" name="productAmountsPanel">
       <field name="netAmount" />
