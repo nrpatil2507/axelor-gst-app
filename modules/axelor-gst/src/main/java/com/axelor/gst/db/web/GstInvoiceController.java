@@ -38,7 +38,13 @@ public class GstInvoiceController {
 
     InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
     Invoice invoice = request.getContext().getParent().asType(Invoice.class);
-    invoiceLine = gstInvoiceService.calculateInvoiceLineGst(invoiceLine, invoice);
+
+    Boolean isIgst =
+        invoice.getInvoiceAddress().getState().equals(invoice.getCompany().getAddress().getState())
+            ? false
+            : true;
+
+    invoiceLine = gstInvoiceService.calculateInvoiceLineGst(invoiceLine, isIgst);
     response.setValue("igst", invoiceLine.getIgst());
     response.setValue("cgst", invoiceLine.getCgst());
     response.setValue("sgst", invoiceLine.getSgst());
@@ -63,19 +69,22 @@ public class GstInvoiceController {
     List<Integer> productIdList = new ArrayList<>();
     productIdList = (List<Integer>) request.getContext().get("productIds");
     if (productIdList != null) {
-      try {
-        List<InvoiceLine> invoiceLineList = new ArrayList<>();
-        for (Integer ProductId : productIdList) {
-          Product product = productRepo.find(ProductId.longValue());
-          System.out.println(product);
-          InvoiceLine invoiceLine = new InvoiceLine();
-          invoiceLine.setProduct(product);
-          invoiceLine = gstInvoiceService.setSelectedProductInvoice(invoiceLine);
-          invoiceLineList.add(invoiceLine);
-        }
-        response.setValue("invoiceItemsList", invoiceLineList);
-      } catch (Exception e) {
+      List<InvoiceLine> invoiceLineList = new ArrayList<>();
+      for (Integer ProductId : productIdList) {
+        Product product = productRepo.find(ProductId.longValue());
+        System.out.println(product);
+        InvoiceLine invoiceLine = new InvoiceLine();
+        invoiceLine.setProduct(product);
+        invoiceLine = gstInvoiceService.setSelectedProductInvoice(invoiceLine);
+        invoiceLineList.add(invoiceLine);
       }
+      response.setValue("invoiceItemsList", invoiceLineList);
     }
+  }
+
+  public void setProductDetail(ActionRequest request, ActionResponse response) {
+    InvoiceLine invoiceLine = request.getContext().asType(InvoiceLine.class);
+    invoiceLine = gstInvoiceService.setSelectedProductInvoice(invoiceLine);
+    response.setValues(invoiceLine);
   }
 }

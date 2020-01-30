@@ -36,9 +36,9 @@
           <field name="line1" />
           <field name="line2"></field>
           <field name="type" />
-          <field name="city"/>
+          <field name="city" onChange="action-attrs-set-state-on-change-city"/>
+           <field name="state" required="true" onChange="action-attrs-set-country-on-change-state"/>
           <field name="country" />
-          <field name="state" required="true"/>
         </editor>
       </field>
     </panel>
@@ -91,4 +91,8 @@
   </div>
     ]]></template>
   </cards>
+
+  <action-attrs name="action-attrs-set-country-on-change-state">
+  <attribute name="domain" for="country" if="state" expr="eval: &quot;self.id =${__this__.state.country.id}&quot;"/>
+  </action-attrs>
 </object-views>

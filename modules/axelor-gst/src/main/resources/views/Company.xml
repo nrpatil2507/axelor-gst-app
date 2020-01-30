@@ -11,11 +11,15 @@
   </grid>
 
   <form name="company-form" title="Company" model="com.axelor.gst.db.Company" width="large">
-    <panel title="Company Detail" name="companyDetailPanel">
-      <field name="logo" widget="image" showTitle="false" colSpan="4" />
-      <field name="name" colSpan="4" />
-      <field name="gstin" colSpan="4" />
-      <field name="address" colSpan="8" colOffset="4" />
+    <panel title="Company Detail" name="companyPanel">
+    <panel name="companyLogoPanel" colSpan="4">
+     <field name="logo" widget="image" showTitle="false"  />
+    </panel>
+     <panel name="companyDetailPanel" colSpan="8">
+      <field name="name" colSpan="6" />
+      <field name="gstin" colSpan="6" />
+      <field name="address" colSpan="12"/>
+    </panel>
     </panel>
     <panel title="Contact-Detail" name="contactDetailPanel">
       <field name="contactList" showTitle="false" colSpan="12">
@@ -29,7 +33,7 @@
         </editor>
       </field>
     </panel>
-    <panel-related field="bankDetailsList" target="com.axelor.gst.db.BankAccount">
+    <panel-related field="bankDetailsList" target="com.axelor.gst.db.BankAccount" name="bankDetailPanel">
     </panel-related>
   </form>
 

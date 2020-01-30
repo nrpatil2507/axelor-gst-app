@@ -36,17 +36,7 @@
     <field name="sgst" />
     <field name="cgst" />
     <field name="grossAmount" />
-
   </grid>
-
-
-  <action-record name="action-record-invoice-line-set-product-detail"
-    model="com.axelor.gst.db.InvoiceLine">
-    <field name="gstRate" expr="eval:product.gstRate" />
-    <field name="item" expr="eval:'['+ product.code +'] '+ product.name" />
-    <field name="hsbn" expr="eval:product.hsbn" />
-    <field name="price" expr="eval:product.salePrice" />
-  </action-record>
 
   <action-record name="action-invoice-product-record-set-net-amount"
     model="com.axelor.gst.db.InvoiceLine">
@@ -66,19 +56,23 @@
     <check field="price" />
     <check field="product" error="pls select any product" if="!product" />
     <check field="gstRate" error="gst rate is not set" if="!gstRate" />
-    <check field="qty" error="pls select quantity" if="!qty" />
+    <check field="qty" error="pls enter valid quantity" if="qty &lt;=0" />
     <check field="price" error="pls enter valid price" if="price &lt;=0" />
   </action-condition>
 
   <action-group name="action-invoice-line-group-on-change-product">
-    <action name="action-record-invoice-line-set-product-detail" />
+    <action name="action-invoice-line-method-set-product-detail" />
     <action name="action-invoice-line-group-set-data-on-change-price-qty" />
   </action-group>
 
   <action-group name="action-invoice-line-group-set-data-on-change-price-qty">
+    <action name="action-invoice-line-condition-check-product-is-empty" />
     <action name="action-invoice-product-record-set-net-amount" />
     <action name="action-invoice-line-method-calculate-amounts" />
-    <action name="action-invoice-line-condition-check-product-is-empty" />
   </action-group>
+
+  <action-method name="action-invoice-line-method-set-product-detail">
+  <call class="com.axelor.gst.db.web.GstInvoiceController" method="setProductDetail"/>
+  </action-method>
 
 </object-views>

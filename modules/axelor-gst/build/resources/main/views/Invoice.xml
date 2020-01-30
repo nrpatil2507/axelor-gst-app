@@ -38,20 +38,23 @@
     </panel>
     <panel title="Invoice Detail" name="invoiceDetailPanel">
       <field name="reference" colSpan="4" showIf="reference" />
-      <field name="invoiceDateT" colSpan="4" readonlyIf="status !='draft'"/>
+      <field name="invoiceDateT" colSpan="4" readonlyIf="status !='draft'" />
       <field name="priority" colSpan="4" />
       <field name="company" colSpan="4"
         onChange="action-invoice-group-call-on-change" readonlyIf="status !='draft'" />
       <field name="party" colSpan="4"
-        onChange="action-invoice-group-set-party-data" readonlyIf="status !='draft'"/>
-      <field name="partyContact" colSpan="4" onSelect="action-invoice-attrs-on-change-party-set-contact-address" readonlyIf="status !='draft'"/>
+        onChange="action-invoice-group-set-party-data" readonlyIf="status !='draft'" />
+      <field name="partyContact" colSpan="4"
+        onSelect="action-invoice-attrs-on-change-party-set-contact-address"
+        readonlyIf="status !='draft'" />
     </panel>
     <panel title="Address" name="addressPanel">
       <field name="invoiceAddress" readonlyIf="status !='draft'"
         onChange="action-invoice-group-call-on-change" onSelect="action-invoice-attrs-on-change-party-set-contact-address" />
-      <field name="isInvoiceAddAsShipping"
-        onChange="action-invoice-method-set-party-detail" readonlyIf="status !='draft'" />
-      <field name="shippingAddress" hideIf="isInvoiceAddAsShipping" readonlyIf="status !='draft'"/>
+      <field name="isInvoiceAddAsShipping" onChange="action-invoice-method-set-party-detail"
+        readonlyIf="status !='draft'" widget="boolean-switch" />
+      <field name="shippingAddress" hideIf="isInvoiceAddAsShipping"
+        readonlyIf="status !='draft'" />
     </panel>
 
     <panel-related field="invoiceItemsList" target="com.axelor.gst.db.InvoiceLine"
@@ -65,21 +68,21 @@
       <field name="netSgst" />
       <field name="grossAmount" />
     </panel>
-    <panel sidebar="true" colSpan="4">
+    <panel sidebar="true" colSpan="4" name="statuButtonsPanel">
       <button name="draftBtn" title="Draft" css="btn-primary"
-        hidden="true" onClick="action-invoice-status-attrs-change-on-draft"
+        hidden="true" onClick="save,action-invoice-status-attrs-change-on-draft,save"
         showIf="status == 'cancelled' || status == 'validated'" />
 
-      <button name="validateBtn" title="Validated" css="btn-success"
-        onClick="save,action-invoice-status-attrs-change-on-validated,action-invoice-method-set-reference"
+      <button name="validateBtn" title="Validated" css="btn-warning"
+        onClick="save,action-invoice-status-attrs-change-on-validated,action-invoice-method-set-reference,save"
         hidden="true" showIf="status == 'draft' || status=='paid'" />
 
-      <button name="paidBtn" title="Paid" css="btn-warning"
-        onClick="save,action-invoice-status-attrs-change-on-paid" hidden="true"
+      <button name="paidBtn" title="Paid" css="btn-success"
+        onClick="save,action-invoice-status-attrs-change-on-paid,save" hidden="true"
         showIf="status == 'validated'" />
 
       <button name="cancelBtn" title="Cancel" css="btn-danger"
-        onClick="save,action-invoice-status-attrs-change-on-cancelled"
+        onClick="save,action-invoice-status-attrs-change-on-cancelled,save"
         hideIf="status == 'cancelled'" />
     </panel>
   </form>
@@ -135,11 +138,12 @@
   <action-attrs
     name="action-invoice-attrs-on-change-party-set-contact-address">
     <attribute name="domain" for="partyContact"
-      expr="eval:party?.contactList?.collect{it.id}?.size() > 0? &quot;self.id IN (${party?.contactList?.collect{it.id}?.join(',')})&quot; : &quot;self.id IN (null) &quot;" />
+      expr="eval: party?.contactList?.collect{it.id}?.size() > 0? &quot;self.id IN (${party?.contactList?.collect{it.id}?.join(',')})&quot; : &quot;self.id IN (null) &quot;" />
     <attribute name="domain" for="invoiceAddress"
-      expr="eval:party?.addressList?.collect{it.id}?.size() > 0? &quot;self.id IN (${party?.addressList?.collect{it.id}?.join(',')})&quot; : &quot;self.id IN (null)&quot;" />
+      expr="eval: party?.addressList?.collect{it.id}?.size() > 0? &quot;self.id IN (${party?.addressList?.collect{it.id}?.join(',')})&quot; : &quot;self.id IN (null)&quot;" />
     <attribute name="domain" for="shippingAddress"
       expr="eval:party?.addressList?.collect{it.id}?.size() > 0? &quot;self.id IN (${party?.addressList?.collect{it.id}?.join(',')})&quot; : &quot;self.id IN (null)&quot;" />
+
   </action-attrs>
 
   <action-method name="action-invoice-method-set-party-detail">

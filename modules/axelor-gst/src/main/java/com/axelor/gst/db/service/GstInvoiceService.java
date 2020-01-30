@@ -10,7 +10,7 @@ public interface GstInvoiceService {
 
   public Invoice setPartyDetail(Invoice invoice);
 
-  public InvoiceLine calculateInvoiceLineGst(InvoiceLine invoiceLine, Invoice invoice);
+  public InvoiceLine calculateInvoiceLineGst(InvoiceLine invoiceLine, Boolean state);
 
   public InvoiceLine setSelectedProductInvoice(InvoiceLine invoiceLine);
 

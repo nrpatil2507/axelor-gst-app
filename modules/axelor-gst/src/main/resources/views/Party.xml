@@ -91,7 +91,7 @@
   </div>
     ]]></template>
   </cards>
-  
+
   <action-attrs name="action-attrs-set-country-on-change-state">
   <attribute name="domain" for="country" if="state" expr="eval: &quot;self.id =${__this__.state.country.id}&quot;"/>
   </action-attrs>

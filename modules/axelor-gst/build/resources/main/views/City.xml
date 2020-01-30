@@ -7,7 +7,7 @@
   <form name="city-form" title="City" model="com.axelor.gst.db.City" width="large">
     <panel title="City Detail" name="cityDetailPanel">
       <field name="name" />
-      <field name="state" />
+      <field name="state" onChange="action-attrs-set-country-on-change-state"/>
       <field name="country" />
     </panel>
   </form>

@@ -1,7 +1,7 @@
 package com.axelor.gst.db.service;
 
+import com.axelor.common.ObjectUtils;
 import com.axelor.gst.db.Address;
-import com.axelor.gst.db.Company;
 import com.axelor.gst.db.Contact;
 import com.axelor.gst.db.Invoice;
 import com.axelor.gst.db.InvoiceLine;
@@ -40,10 +40,7 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
   }
 
   @Override
-  public InvoiceLine calculateInvoiceLineGst(InvoiceLine invoiceLine, Invoice invoice) {
-    Address address = invoice.getInvoiceAddress();
-    Company company = invoice.getCompany();
-    Address address2 = company.getAddress();
+  public InvoiceLine calculateInvoiceLineGst(InvoiceLine invoiceLine, Boolean isIgst) {
     BigDecimal gstAmount;
     BigDecimal invoiceCgst;
 
@@ -54,7 +51,7 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
             .multiply(invoiceLine.getGstRate())
             .divide(BigDecimal.valueOf(100));
 
-    if (address.getState() == address2.getState()) {
+    if (isIgst) {
       invoiceCgst = gstAmount.divide(BigDecimal.valueOf(2));
       invoiceLine.setCgst(invoiceCgst);
       invoiceLine.setSgst(invoiceCgst);
@@ -71,21 +68,15 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
   public InvoiceLine setSelectedProductInvoice(InvoiceLine invoiceLine) {
 
     Product product = invoiceLine.getProduct();
-    if (product.getGstRate().compareTo(BigDecimal.ZERO) != 0) {
+    if (product != null) {
       invoiceLine.setGstRate(product.getGstRate());
-    }
-    if (product.getHsbn().equals(null)) {
       invoiceLine.setHsbn(product.getHsbn());
-    }
-    if (product.getSalePrice().compareTo(BigDecimal.ZERO) != 0) {
       invoiceLine.setPrice(product.getSalePrice());
-    }
-    if (invoiceLine.getQty() == 0) {
       invoiceLine.setQty(1);
+      invoiceLine.setItem("[" + product.getCode() + "]" + product.getName());
+      invoiceLine.setNetAmount(
+          invoiceLine.getPrice().multiply(BigDecimal.valueOf(invoiceLine.getQty())));
     }
-    invoiceLine.setItem("[" + product.getCode() + "]" + product.getName());
-    invoiceLine.setNetAmount(
-        invoiceLine.getPrice().multiply(BigDecimal.valueOf(invoiceLine.getQty())));
     return invoiceLine;
   }
 
@@ -93,16 +84,15 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
   public List<InvoiceLine> setInvoiceDetailOnChange(Invoice invoice) {
     List<InvoiceLine> invoiceLineList = invoice.getInvoiceItemsList();
     List<InvoiceLine> invoiceline = new ArrayList<InvoiceLine>();
-    Party party = invoice.getParty();
 
-    Company company = invoice.getCompany();
-    Address address = company.getAddress();
+    Party party = invoice.getParty();
     BigDecimal gstAmount = BigDecimal.ZERO;
     BigDecimal invoiceIgst = BigDecimal.ZERO;
     BigDecimal invoiceCgst = BigDecimal.ZERO;
     BigDecimal grossAmount = BigDecimal.ZERO;
+
     if (invoiceLineList != null) {
-      if (party != null && company != null) {
+      if (party != null) {
         for (InvoiceLine invoiceLine : invoiceLineList) {
           gstAmount =
               invoiceLine
@@ -110,7 +100,8 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
                   .multiply(invoiceLine.getGstRate())
                   .divide(BigDecimal.valueOf(100));
 
-          if (address.getState() == invoice.getInvoiceAddress().getState()) {
+          if (invoice.getCompany().getAddress().getState()
+              == invoice.getInvoiceAddress().getState()) {
             invoiceCgst = gstAmount.divide(BigDecimal.valueOf(2));
             grossAmount = invoiceLine.getNetAmount().add(invoiceCgst).add(invoiceCgst);
           } else {
@@ -133,35 +124,37 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
     Party party = invoice.getParty();
     if (party != null) {
       List<Contact> contactList = party.getContactList();
-      if (contactList != null) {
+      if (!ObjectUtils.isEmpty(contactList)) {
         for (Contact contact : contactList) {
           if (contact.getType().equals("primary")) {
             invoice.setPartyContact(contact);
           }
         }
+      } else {
+        invoice.setPartyContact(null);
       }
       List<Address> addressList = party.getAddressList();
-      if (addressList != null) {
+      if (!ObjectUtils.isEmpty(addressList)) {
         for (Address address : addressList) {
-          if (address.getType().equals("invoice")) {
-            invoice.setInvoiceAddress(address);
-          } else if (address.getType().equals("default")) {
+          if (address.getType().equals("invoice") || address.getType().equals("default")) {
             invoice.setInvoiceAddress(address);
           }
         }
-      }
-      if (invoice.getIsInvoiceAddAsShipping() == true) {
-        invoice.setShippingAddress(invoice.getInvoiceAddress());
       } else {
-        if (addressList != null) {
+        invoice.setInvoiceAddress(null);
+      }
+      if (!ObjectUtils.isEmpty(addressList)) {
+        if (invoice.getIsInvoiceAddAsShipping() == true) {
+          invoice.setShippingAddress(invoice.getInvoiceAddress());
+        } else {
           for (Address address : addressList) {
-            if (address.getType().equals("shipping")) {
-              invoice.setShippingAddress(address);
-            } else if (address.getType().equals("default")) {
+            if (address.getType().equals("shipping") || address.getType().equals("default")) {
               invoice.setShippingAddress(address);
             }
           }
         }
+      } else {
+        invoice.setShippingAddress(null);
       }
     }
     return invoice;

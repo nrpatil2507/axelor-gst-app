@@ -13,11 +13,16 @@
 
   <form name="sequence-form" title="Sequence" model="com.axelor.gst.db.Sequence">
     <panel title="Sequence Detail" name="sequenceDetailPanel">
-      <field name="prefix" colSpan="4" />
-      <field name="sufix" colSpan="4" />
-      <field name="padding" colSpan="4" />
-      <field name="nextNumber" />
+      <field name="prefix" colSpan="4"
+        onChange="action-sequence-method-set-next-number" />
+      <field name="padding" colSpan="4" onChange="action-sequence-method-set-next-number"/>
+      <field name="sufix" colSpan="4" onChange="action-sequence-method-set-next-number"/>
       <field name="model" />
+      <field name="nextNumber" readonly="true" />
     </panel>
   </form>
+
+  <action-method name="action-sequence-method-set-next-number">
+    <call class="com.axelor.gst.db.web.GstSequenceController" method="setSequenceData" />
+  </action-method>
 </object-views>

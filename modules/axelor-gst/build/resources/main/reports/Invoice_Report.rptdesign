@@ -831,6 +831,9 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                     <row id="11">
                         <property name="height">0.8125in</property>
                         <cell id="12">
+                            <property name="borderBottomColor">#808080</property>
+                            <property name="borderBottomStyle">solid</property>
+                            <property name="borderBottomWidth">medium</property>
                             <image id="13">
                                 <property name="height">0.65625in</property>
                                 <property name="width">1.5520833333333333in</property>
@@ -928,14 +931,14 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                     <property name="borderRightStyle">solid</property>
                     <property name="borderRightWidth">thin</property>
                     <grid id="26">
-                        <property name="height">0.8125in</property>
+                        <property name="height">0.625in</property>
                         <property name="width">3.90625in</property>
                         <column id="27">
                             <property name="width">1.7708333333333333in</property>
                         </column>
                         <column id="28"/>
                         <row id="29">
-                            <property name="height">0.3229166666666667in</property>
+                            <property name="height">0.2708333333333333in</property>
                             <cell id="30">
                                 <label id="35">
                                     <property name="fontSize">12pt</property>
@@ -959,7 +962,7 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                             </cell>
                         </row>
                         <row id="32">
-                            <property name="height">0.4895833333333333in</property>
+                            <property name="height">0.3541666666666667in</property>
                             <cell id="33">
                                 <label id="37">
                                     <property name="fontSize">12pt</property>
@@ -990,12 +993,15 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                     <property name="borderRightStyle">none</property>
                     <property name="borderTopStyle">none</property>
                     <grid id="39">
-                        <property name="height">1.4166666666666667in</property>
+                        <property name="height">1.375in</property>
                         <column id="40"/>
                         <column id="41"/>
                         <row id="42">
-                            <property name="height">0.34375in</property>
+                            <property name="height">0.3020833333333333in</property>
                             <cell id="43">
+                                <property name="borderBottomColor">#808080</property>
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
                                 <label id="48">
                                     <property name="fontSize">12pt</property>
                                     <property name="fontWeight">bold</property>
@@ -1003,7 +1009,11 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                                 </label>
                             </cell>
                             <cell id="44">
+                                <property name="borderBottomColor">#808080</property>
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
                                 <data id="49">
+                                    <property name="fontSize">12pt</property>
                                     <property name="dataSet">Invoice_data</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
@@ -1084,19 +1094,25 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
         <label id="89">
             <property name="fontSize">12pt</property>
             <property name="fontWeight">bold</property>
+            <property name="marginTop">2pt</property>
+            <property name="marginBottom">2pt</property>
             <property name="textAlign">center</property>
-            <text-property name="text">Product Detail</text-property>
+            <text-property name="text">Products Detail</text-property>
         </label>
         <table id="53">
+            <property name="borderBottomColor">#808080</property>
             <property name="borderBottomStyle">solid</property>
             <property name="borderBottomWidth">thin</property>
+            <property name="borderLeftColor">#808080</property>
             <property name="borderLeftStyle">solid</property>
             <property name="borderLeftWidth">thin</property>
+            <property name="borderRightColor">#808080</property>
             <property name="borderRightStyle">solid</property>
             <property name="borderRightWidth">thin</property>
+            <property name="borderTopColor">#808080</property>
             <property name="borderTopStyle">solid</property>
             <property name="borderTopWidth">thin</property>
-            <property name="width">7.989583333333333in</property>
+            <property name="width">7.947916666666667in</property>
             <property name="dataSet">Invoice_data</property>
             <list-property name="boundDataColumns">
                 <structure>
@@ -1213,7 +1229,7 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                 <property name="width">0.7916666666666666in</property>
             </column>
             <column id="88">
-                <property name="width">1.21875in</property>
+                <property name="width">1.3333333333333333in</property>
             </column>
             <header>
                 <row id="54">
@@ -1343,8 +1359,6 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                 <row id="63">
                     <property name="height">0.3333333333333333in</property>
                     <cell id="64">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">thin</property>
                         <property name="borderRightStyle">solid</property>
@@ -1356,8 +1370,6 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                         </data>
                     </cell>
                     <cell id="65">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">thin</property>
                         <property name="borderRightStyle">solid</property>
@@ -1369,8 +1381,6 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                         </data>
                     </cell>
                     <cell id="66">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">thin</property>
                         <property name="borderRightStyle">solid</property>
@@ -1386,8 +1396,6 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                         </data>
                     </cell>
                     <cell id="67">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">thin</property>
                         <property name="borderRightStyle">solid</property>
@@ -1403,8 +1411,6 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                         </data>
                     </cell>
                     <cell id="68">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">thin</property>
                         <property name="borderRightStyle">solid</property>
@@ -1420,8 +1426,6 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                         </data>
                     </cell>
                     <cell id="69">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">thin</property>
                         <property name="borderRightStyle">solid</property>
@@ -1437,8 +1441,6 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                         </data>
                     </cell>
                     <cell id="70">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">thin</property>
                         <property name="borderRightStyle">solid</property>
@@ -1454,8 +1456,6 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                         </data>
                     </cell>
                     <cell id="71">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
                         <property name="borderLeftStyle">solid</property>
                         <property name="borderLeftWidth">thin</property>
                         <property name="borderRightStyle">solid</property>
@@ -1472,132 +1472,313 @@ left join meta_file as m on c.logo=m.id where i.id=?;]]></xml-property>
                     </cell>
                 </row>
             </detail>
-            <footer>
-                <row id="72">
-                    <cell id="73">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                        <label id="98">
-                            <property name="fontWeight">bold</property>
-                            <text-property name="text">Total</text-property>
-                        </label>
-                    </cell>
-                    <cell id="74">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                        <data id="119">
-                            <property name="resultSetColumn">Aggregation</property>
-                        </data>
-                    </cell>
-                    <cell id="75">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                    </cell>
-                    <cell id="76">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                        <data id="109">
-                            <structure name="numberFormat">
-                                <property name="category">Currency</property>
-                                <property name="pattern">₹ ###0.00{RoundingMode=HALF_UP}</property>
-                            </structure>
-                            <property name="resultSetColumn">totalnetamount</property>
-                        </data>
-                    </cell>
-                    <cell id="77">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                        <data id="117">
-                            <structure name="numberFormat">
-                                <property name="category">Currency</property>
-                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
-                            </structure>
-                            <property name="resultSetColumn">net_igst</property>
-                        </data>
-                    </cell>
-                    <cell id="78">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                        <data id="116">
-                            <structure name="numberFormat">
-                                <property name="category">Currency</property>
-                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
-                            </structure>
-                            <property name="resultSetColumn">net_sgst</property>
-                        </data>
-                    </cell>
-                    <cell id="79">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                        <data id="115">
-                            <structure name="numberFormat">
-                                <property name="category">Currency</property>
-                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
-                            </structure>
-                            <property name="resultSetColumn">net_cgst</property>
-                        </data>
-                    </cell>
-                    <cell id="80">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                        <data id="110">
-                            <structure name="numberFormat">
-                                <property name="category">Currency</property>
-                                <property name="pattern">₹ ###0.00{RoundingMode=HALF_UP}</property>
-                            </structure>
-                            <property name="resultSetColumn">totalgrossamount</property>
-                        </data>
-                    </cell>
-                </row>
-            </footer>
         </table>
+        <grid id="158">
+            <property name="marginTop">5pt</property>
+            <column id="159"/>
+            <column id="160"/>
+            <row id="161">
+                <cell id="162"/>
+                <cell id="163">
+                    <grid id="189">
+                        <property name="dataSet">Invoice_data</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">reference</property>
+                                <text-property name="displayName">reference</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["reference"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">invoice_datet</property>
+                                <text-property name="displayName">invoice_datet</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["invoice_datet"]</expression>
+                                <property name="dataType">date-time</property>
+                            </structure>
+                            <structure>
+                                <property name="name">net_cgst</property>
+                                <text-property name="displayName">net_cgst</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["net_cgst"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">net_sgst</property>
+                                <text-property name="displayName">net_sgst</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["net_sgst"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">net_igst</property>
+                                <text-property name="displayName">net_igst</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["net_igst"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">name</property>
+                                <text-property name="displayName">name</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["name"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">igst</property>
+                                <text-property name="displayName">igst</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["igst"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">cgst</property>
+                                <text-property name="displayName">cgst</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["cgst"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">sgst</property>
+                                <text-property name="displayName">sgst</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["sgst"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">price</property>
+                                <text-property name="displayName">price</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["price"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">net_amount</property>
+                                <text-property name="displayName">net_amount</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["net_amount"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">gross_amount</property>
+                                <text-property name="displayName">gross_amount</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["gross_amount"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">item</property>
+                                <text-property name="displayName">item</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["item"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">qty</property>
+                                <text-property name="displayName">qty</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["qty"]</expression>
+                                <property name="dataType">integer</property>
+                            </structure>
+                            <structure>
+                                <property name="name">totalnetamount</property>
+                                <text-property name="displayName">totalnetamount</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["totalnetamount"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">totalgrossamount</property>
+                                <text-property name="displayName">totalgrossamount</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["totalgrossamount"]</expression>
+                                <property name="dataType">decimal</property>
+                            </structure>
+                            <structure>
+                                <property name="name">line1</property>
+                                <text-property name="displayName">line1</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["line1"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">line2</property>
+                                <text-property name="displayName">line2</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["line2"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">pin_code</property>
+                                <text-property name="displayName">pin_code</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["pin_code"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">city</property>
+                                <text-property name="displayName">city</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["city"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">Aggregation</property>
+                                <text-property name="displayName">totalQty</text-property>
+                                <property name="dataType">float</property>
+                                <property name="aggregateFunction">SUM</property>
+                                <list-property name="arguments">
+                                    <structure>
+                                        <property name="name">Expression</property>
+                                        <expression name="value" type="javascript">row["qty"]</expression>
+                                    </structure>
+                                </list-property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                            <structure>
+                                <property name="name">Aggregation_1</property>
+                                <text-property name="displayName">totalTax</text-property>
+                                <property name="dataType">float</property>
+                                <property name="aggregateFunction">AVE</property>
+                                <list-property name="arguments">
+                                    <structure>
+                                        <property name="name">Expression</property>
+                                        <expression name="value" type="javascript">row["net_cgst"]+row["net_igst"]+row["net_sgst"]</expression>
+                                    </structure>
+                                </list-property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                        </list-property>
+                        <column id="190"/>
+                        <column id="191"/>
+                        <row id="192">
+                            <cell id="193">
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <property name="borderLeftStyle">solid</property>
+                                <property name="borderLeftWidth">thin</property>
+                                <property name="borderRightStyle">solid</property>
+                                <property name="borderRightWidth">thin</property>
+                                <property name="borderTopStyle">solid</property>
+                                <property name="borderTopWidth">thin</property>
+                                <label id="182">
+                                    <property name="fontSize">12pt</property>
+                                    <property name="fontWeight">bold</property>
+                                    <property name="textAlign">left</property>
+                                    <text-property name="text">Total Quantity:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="194">
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <property name="borderLeftStyle">solid</property>
+                                <property name="borderLeftWidth">thin</property>
+                                <property name="borderRightStyle">solid</property>
+                                <property name="borderRightWidth">thin</property>
+                                <property name="borderTopStyle">solid</property>
+                                <property name="borderTopWidth">thin</property>
+                                <data id="204">
+                                    <structure name="numberFormat">
+                                        <property name="category">Currency</property>
+                                        <property name="pattern">₹ ###0.00{RoundingMode=HALF_UP}</property>
+                                    </structure>
+                                    <property name="textAlign">right</property>
+                                    <property name="resultSetColumn">Aggregation</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="195">
+                            <cell id="196">
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <property name="borderLeftStyle">solid</property>
+                                <property name="borderLeftWidth">thin</property>
+                                <property name="borderRightStyle">solid</property>
+                                <property name="borderRightWidth">thin</property>
+                                <property name="borderTopStyle">solid</property>
+                                <property name="borderTopWidth">thin</property>
+                                <label id="183">
+                                    <property name="fontSize">12pt</property>
+                                    <property name="fontWeight">bold</property>
+                                    <property name="textAlign">left</property>
+                                    <text-property name="text">Total NetAmount:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="197">
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <property name="borderLeftStyle">solid</property>
+                                <property name="borderLeftWidth">thin</property>
+                                <property name="borderRightStyle">solid</property>
+                                <property name="borderRightWidth">thin</property>
+                                <property name="borderTopStyle">solid</property>
+                                <property name="borderTopWidth">thin</property>
+                                <data id="109">
+                                    <structure name="numberFormat">
+                                        <property name="category">Currency</property>
+                                        <property name="pattern">₹ ###0.00{RoundingMode=HALF_UP}</property>
+                                    </structure>
+                                    <property name="textAlign">right</property>
+                                    <property name="resultSetColumn">totalnetamount</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="198">
+                            <cell id="199">
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <property name="borderLeftStyle">solid</property>
+                                <property name="borderLeftWidth">thin</property>
+                                <property name="borderRightStyle">solid</property>
+                                <property name="borderRightWidth">thin</property>
+                                <property name="borderTopStyle">solid</property>
+                                <property name="borderTopWidth">thin</property>
+                                <label id="184">
+                                    <property name="fontSize">12pt</property>
+                                    <property name="fontWeight">bold</property>
+                                    <property name="textAlign">left</property>
+                                    <text-property name="text">Total Tax:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="200">
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <property name="borderLeftStyle">solid</property>
+                                <property name="borderLeftWidth">thin</property>
+                                <property name="borderRightStyle">solid</property>
+                                <property name="borderRightWidth">thin</property>
+                                <property name="borderTopStyle">solid</property>
+                                <property name="borderTopWidth">thin</property>
+                                <data id="205">
+                                    <structure name="numberFormat">
+                                        <property name="category">Currency</property>
+                                        <property name="pattern">₹ ###0.00{RoundingMode=HALF_UP}</property>
+                                    </structure>
+                                    <property name="textAlign">right</property>
+                                    <property name="resultSetColumn">Aggregation_1</property>
+                                </data>
+                            </cell>
+                        </row>
+                        <row id="201">
+                            <cell id="202">
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <property name="borderLeftStyle">solid</property>
+                                <property name="borderLeftWidth">thin</property>
+                                <property name="borderRightStyle">solid</property>
+                                <property name="borderRightWidth">thin</property>
+                                <property name="borderTopStyle">solid</property>
+                                <property name="borderTopWidth">thin</property>
+                                <label id="185">
+                                    <property name="fontSize">12pt</property>
+                                    <property name="fontWeight">bold</property>
+                                    <property name="textAlign">left</property>
+                                    <text-property name="text">Total GrossAmount:</text-property>
+                                </label>
+                            </cell>
+                            <cell id="203">
+                                <property name="borderBottomStyle">solid</property>
+                                <property name="borderBottomWidth">thin</property>
+                                <property name="borderLeftStyle">solid</property>
+                                <property name="borderLeftWidth">thin</property>
+                                <property name="borderRightStyle">solid</property>
+                                <property name="borderRightWidth">thin</property>
+                                <property name="borderTopStyle">solid</property>
+                                <property name="borderTopWidth">thin</property>
+                                <data id="110">
+                                    <structure name="numberFormat">
+                                        <property name="category">Currency</property>
+                                        <property name="pattern">₹ ###0.00{RoundingMode=HALF_UP}</property>
+                                    </structure>
+                                    <property name="textAlign">right</property>
+                                    <property name="resultSetColumn">totalgrossamount</property>
+                                </data>
+                            </cell>
+                        </row>
+                    </grid>
+                </cell>
+            </row>
+        </grid>
     </body>
 </report>
