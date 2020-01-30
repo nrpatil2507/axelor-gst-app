@@ -16,9 +16,9 @@
       <field name="type" colSpan="12" />
       <field name="line1" colSpan="6" />
       <field name="line2" colSpan="6" />
-      <field name="city" colSpan="6" />
+      <field name="city" colSpan="6" onChange="action-attrs-set-state-on-change-city"/>
       <field name="pinCode" colSpan="6" />
-      <field name="state" colSpan="6" />
+      <field name="state" colSpan="6" required="true" onChange="action-attrs-set-country-on-change-state"/>
       <field name="country" colSpan="6" />
     </panel>
   </form>
@@ -32,4 +32,8 @@
     <field name="country" />
     <field name="pinCode" />
   </grid>
+  
+  <action-attrs name="action-attrs-set-state-on-change-city">
+  <attribute name="domain" for="state" if="city" expr="eval: &quot;self.id=${__this__.city.state.id}&quot;"/>
+  </action-attrs>
 </object-views>
