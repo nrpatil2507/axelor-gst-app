@@ -32,7 +32,6 @@ public class GstSequenceController {
     } else {
       newNextNumber = prefix + newPadding + suffix;
     }
-
     response.setValue("nextNumber", newNextNumber);
   }
 
@@ -49,13 +48,16 @@ public class GstSequenceController {
               .fetchOne();
       if(sequence!=null)
       {
+    	party.setReference(sequence.getNextNumber());
+  		response.setValues(party);
+  		
     	String suffix=sequence.getSufix();
     	String prefix=sequence.getPrefix();
     	String nextNumber;
-    	int padding=sequence.getPadding();
-    	int paddingvalue = Integer.parseInt((sequence.getNextNumber().substring(prefix.length(), prefix.length()+padding)))+1;
+    	
+    	int paddingvalue = Integer.parseInt((sequence.getNextNumber().substring(prefix.length(), prefix.length()+sequence.getPadding())))+1;
 		String newpadding =Integer.toString(paddingvalue);
-		while(newpadding.length()<padding){
+		while(newpadding.length()<sequence.getPadding()){
 			newpadding="0"+newpadding;
 		}
 		if(suffix==null){
@@ -66,8 +68,7 @@ public class GstSequenceController {
 		}
 		sequence.setNextNumber(nextNumber);
 		sequenceRepo.save(sequence);
-		party.setReference(nextNumber);
-		response.setValues(party);
+		
       }
       else
       {
@@ -88,13 +89,15 @@ public class GstSequenceController {
               .fetchOne();
       if(sequence!=null)
       {
+    	invoice.setReference(sequence.getNextNumber());
+  		response.setValues(invoice);
     	String suffix=sequence.getSufix();
     	String prefix=sequence.getPrefix();
     	String nextNumber;
-    	int padding=sequence.getPadding();
-    	int paddingvalue = Integer.parseInt((sequence.getNextNumber().substring(prefix.length(), prefix.length()+padding)))+1;
+    	int paddingvalue = Integer.parseInt((sequence.getNextNumber().substring(prefix.length(),prefix.length()+sequence.getPadding())))+1;
+    	
 		String newpadding =Integer.toString(paddingvalue);
-		while(newpadding.length()<padding){
+		while(newpadding.length()<sequence.getPadding()){
 			newpadding="0"+newpadding;
 		}
 		if(suffix==null){
@@ -105,8 +108,6 @@ public class GstSequenceController {
 		}
 		sequence.setNextNumber(nextNumber);
 		sequenceRepo.save(sequence);
-		invoice.setReference(nextNumber);
-		response.setValues(invoice);
       }
       else
       {
