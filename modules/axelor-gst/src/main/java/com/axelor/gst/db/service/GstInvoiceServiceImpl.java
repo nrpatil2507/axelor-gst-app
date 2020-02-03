@@ -46,10 +46,7 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
 
     BigDecimal grossAmount;
     gstAmount =
-        invoiceLine
-            .getNetAmount()
-            .multiply(invoiceLine.getGstRate())
-            .divide(new BigDecimal(100));
+        invoiceLine.getNetAmount().multiply(invoiceLine.getGstRate()).divide(new BigDecimal(100));
 
     if (isIgst) {
       invoiceCgst = gstAmount.divide(new BigDecimal(2));

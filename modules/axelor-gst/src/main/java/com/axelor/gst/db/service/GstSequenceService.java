@@ -1,13 +1,10 @@
 package com.axelor.gst.db.service;
 
-import com.axelor.gst.db.repo.SequenceRepository;
-import com.google.inject.Inject;
-import com.google.inject.persist.Transactional;
+import com.axelor.gst.db.Sequence;
 
-public class GstSequenceService {
+public interface GstSequenceService {
 
-  @Inject SequenceRepository sequenceRepo;
+  public String setSequence(Sequence sequence);
 
-  @Transactional
-  public void setPartySequence() {}
+  public void setReference(Sequence sequence);
 }
