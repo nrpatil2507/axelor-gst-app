@@ -49,10 +49,10 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
         invoiceLine
             .getNetAmount()
             .multiply(invoiceLine.getGstRate())
-            .divide(BigDecimal.valueOf(100));
+            .divide(new BigDecimal(100));
 
     if (isIgst) {
-      invoiceCgst = gstAmount.divide(BigDecimal.valueOf(2));
+      invoiceCgst = gstAmount.divide(new BigDecimal(2));
       invoiceLine.setCgst(invoiceCgst);
       invoiceLine.setSgst(invoiceCgst);
       grossAmount = invoiceLine.getNetAmount().add(invoiceCgst).add(invoiceCgst);
@@ -75,7 +75,7 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
       invoiceLine.setQty(1);
       invoiceLine.setItem("[" + product.getCode() + "]" + product.getName());
       invoiceLine.setNetAmount(
-          invoiceLine.getPrice().multiply(BigDecimal.valueOf(invoiceLine.getQty())));
+          invoiceLine.getPrice().multiply(new BigDecimal(invoiceLine.getQty())));
     }
     return invoiceLine;
   }
@@ -98,11 +98,11 @@ public class GstInvoiceServiceImpl implements GstInvoiceService {
               invoiceLine
                   .getNetAmount()
                   .multiply(invoiceLine.getGstRate())
-                  .divide(BigDecimal.valueOf(100));
+                  .divide(new BigDecimal(100));
 
           if (invoice.getCompany().getAddress().getState()
               == invoice.getInvoiceAddress().getState()) {
-            invoiceCgst = gstAmount.divide(BigDecimal.valueOf(2));
+            invoiceCgst = gstAmount.divide(new BigDecimal(2));
             grossAmount = invoiceLine.getNetAmount().add(invoiceCgst).add(invoiceCgst);
           } else {
             invoiceIgst = gstAmount;
